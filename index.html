@@ -1,0 +1,39 @@
+<head>
+    <title>OSU Online CS</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="node_modules/dragula/dist/dragula.css" type="text/css">
+</head>
+
+<body>
+    <h1>OSU Online CS Scheduler</h1>
+    <div id='wrapper'>
+        <div id='courses' class='container'>
+            <div id='CS161'>CS161</div>
+            <div id='CS225'>CS225</div>
+            <div id='CS162'>CS162</div>
+            <div id='CS271'>CS271</div>
+            <div id='CS352'>CS352</div>
+            <div id='CS261'>CS261</div>
+            <div id='CS290'>CS290</div>
+            <div id='CS325'>CS325</div>
+            <div id='CS340'>CS340</div>
+            <div id='CS344'>CS344</div>
+            <div id='CS361'>CS361</div>
+            <div id='CS362'>CS362</div>
+            <div id='CS372'>CS372</div>
+            <div id='CS475'>CS475</div>
+            <div id='CS373'>CS373</div>
+            <div id='CS464'>CS464</div>
+            <div id='CS467'>CS467</div>
+            <div id='CS496'>CS496</div>
+        </div>
+        <div id='quarters'>
+            <button id='prevButton' onclick='addPrev()'>+</button>
+            <div id='Q0' class='container'></div>
+            <button id="nextButton" onclick='addNext()'>+</button>
+        </div>
+    </div>
+    <script src='node_modules/dragula/dist/dragula.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src='script.js'></script>
+</body>

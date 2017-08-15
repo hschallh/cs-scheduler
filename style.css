@@ -1,0 +1,74 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background: #efefef;
+    margin: auto auto;
+    max-width: 860px;
+    min-width: 560px;
+}
+
+button {
+    border: 0;
+}
+
+#wrapper {
+    margin: auto;
+    width: 90%;
+    height: 90%;
+    background: #eee;
+    text-align: center;
+}
+
+#wrapper>div {
+    display: inline-block;
+    background: #ddd;
+    height: 100%;
+    width: 49%;
+    overflow-y: auto;
+}
+
+#quarters>* {
+    background: #ccc;
+    margin: 5px;
+    min-height: 30px;
+    width: 90%;
+    display: inherit;
+}
+
+.container>div {
+    display: inherit;
+    background: #fff;
+    margin: 5px;
+    width: 90%;
+}
+
+
+/* DRAGULA */
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+}
+
+.gu-hide {
+    display: none !important;
+}
+
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+}
