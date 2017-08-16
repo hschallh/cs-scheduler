@@ -78,7 +78,7 @@ var courses = [{
         id: "CS464",
         name: "Open Source Software Development",
         elective: true,
-        prereqs: ["CS321"]
+        prereqs: ["CS361"]
     },
     {
         id: "CS496",
@@ -114,6 +114,10 @@ var dragAndDrop = dragula({
     }
 });
 
+dragAndDrop.on("drop", function(el, target, source, sibling) {
+    updatePrereqs();
+});
+
 // jquery after page loads
 $(function() {
 
@@ -126,16 +130,31 @@ $(function() {
     for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
 });
 
+// Creates HTML elements of each of the courses
 function buildCourses() {
     courses.forEach(function(course) {
         var html = "<div id='" + course.id + "'";
-        if (course.elective) {
-            html += " class='ele'";
-        }
         html += "><strong>" + course.id + "</strong> - " + course.name + "</div>";
         $("#courses").append(html);
+
+        if (course.elective) $("#" + course.id).addClass("ele");
+        if (course.prereqs) $("#" + course.id).addClass("prereq");
+    });
+}
+
+// Add prereq class to courses with unsatisfied prereqs by checking if the
+// course is still in the courses container.
+function updatePrereqs() {
+    courses.forEach(function(course) {
         if (course.prereqs) {
-            $("#" + course.id).data(course.prereqs).addClass("prereq");
+            var satisfied = true;
+            course.prereqs.forEach(function(prereq) {
+                if ($("#" + prereq).parent()[0] == $("#courses")[0]) {
+                    $("#" + course.id).addClass("prereq");
+                    satisfied = false;
+                }
+            });
+            if (satisfied) $("#" + course.id).removeClass("prereq");
         }
     });
 }
