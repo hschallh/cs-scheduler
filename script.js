@@ -114,9 +114,19 @@ var dragAndDrop = dragula({
     }
 });
 
-// Any time the schedule is changed, add prereq class to courses with unsatisfied
-// prereqs by checking if the course prereqs are still in the courses container.
+// Any time the schedule is changed
 dragAndDrop.on("drop", function(el, target, source, sibling) {
+
+    if (target.id == "prevButton") {
+        var newQuarter = addPrev();
+        $("#" + newQuarter).append(el);
+    } else if (target.id == "nextButton") {
+        var newQuarter = addNext();
+        $("#" + newQuarter).append(el);
+    }
+
+    // add prereq class to courses with unsatisfied prereqs by checking if the
+    // course prereqs are still in the courses container.
     courses.forEach(function(course) {
         if (course.prereqs) {
             var satisfied = true;
@@ -147,7 +157,7 @@ $(function() {
     // Label the initial quarter container with the current quarter
     $("#Q0").append(getQuarterName(today));
 
-    // Add all of the places courses can be dragged to the drag and drop containers
+    // register all of the places courses can be dragged to with the drag/drop handler
     for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
 });
 

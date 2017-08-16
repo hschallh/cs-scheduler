@@ -17,16 +17,16 @@ button {
 #wrapper {
     margin: auto;
     width: 90%;
-    max-height: 85%;
+    max-height: 95%;
     background: rgba(0, 0, 0, 0.05);
 }
 
 #wrapper>div {
     display: inline-block;
-    padding: 5px;
+    margin: 5px;
     vertical-align: top;
     background: rgba(0, 0, 0, 0.15);
-    max-height: 80%;
+    max-height: 90%;
     width: 47%;
     overflow-y: auto;
     font-size: 20px;
