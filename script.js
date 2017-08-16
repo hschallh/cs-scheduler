@@ -108,43 +108,15 @@ console.log(today);
 // Setup drag and drop
 var dragAndDrop = dragula({
     revertOnSpill: true,
-    // Disallow anything but divs to be dragged
+    // Disallow anything but courses with satisfied prereqs to be moved
     invalid: function(el, handle) {
-        return el.tagName != "DIV" || el.className.includes("prereq");
+        return el.className.includes("prereq");
     }
 });
 
+// Any time the schedule is changed, add prereq class to courses with unsatisfied
+// prereqs by checking if the course prereqs are still in the courses container.
 dragAndDrop.on("drop", function(el, target, source, sibling) {
-    updatePrereqs();
-});
-
-// jquery after page loads
-$(function() {
-
-    buildCourses();
-
-    // Label the initial quarter container with the current quarter
-    $("#Q0").append(getQuarterName(today));
-
-    // Add all of the places courses can be dragged to the drag and drop containers
-    for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
-});
-
-// Creates HTML elements of each of the courses
-function buildCourses() {
-    courses.forEach(function(course) {
-        var html = "<div id='" + course.id + "'";
-        html += "><strong>" + course.id + "</strong> - " + course.name + "</div>";
-        $("#courses").append(html);
-
-        if (course.elective) $("#" + course.id).addClass("ele");
-        if (course.prereqs) $("#" + course.id).addClass("prereq");
-    });
-}
-
-// Add prereq class to courses with unsatisfied prereqs by checking if the
-// course is still in the courses container.
-function updatePrereqs() {
     courses.forEach(function(course) {
         if (course.prereqs) {
             var satisfied = true;
@@ -157,7 +129,27 @@ function updatePrereqs() {
             if (satisfied) $("#" + course.id).removeClass("prereq");
         }
     });
-}
+});
+
+// jquery after page loads
+$(function() {
+
+    // Build html elements for each of the courses
+    courses.forEach(function(course) {
+        var html = "<div id='" + course.id + "'";
+        html += "><strong>" + course.id + "</strong> - " + course.name + "</div>";
+        $("#courses").append(html);
+
+        if (course.elective) $("#" + course.id).addClass("ele");
+        if (course.prereqs) $("#" + course.id).addClass("prereq");
+    });
+
+    // Label the initial quarter container with the current quarter
+    $("#Q0").append(getQuarterName(today));
+
+    // Add all of the places courses can be dragged to the drag and drop containers
+    for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
+});
 
 function getQuarterName(date) { return ["Wi", "Sp", "Su", "Fa"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
 
@@ -173,6 +165,8 @@ function addPrev() {
     dragAndDrop.containers.push($("#" + id)[0]);
 
     oldestQuarter = prevQuarter;
+
+    return id;
 }
 
 // Add the next latest quarter
@@ -184,4 +178,6 @@ function addNext() {
     dragAndDrop.containers.push($("#" + id)[0]);
 
     newestQuarter = nextQuarter;
+
+    return id;
 }
