@@ -3,14 +3,94 @@ var courses = [{
         name: "Intro 1"
     },
     {
+        id: "CS225",
+        name: "Discrete Structures",
+    },
+    {
         id: "CS162",
         name: "Intro 2",
-        prereqs: ["CS161", "Test"]
+        prereqs: ["CS161"]
     },
     {
         id: "CS352",
         name: "Introduction to Usability Engineering",
-        elective: true
+        elective: true,
+        prereqs: ["CS161"]
+    },
+    {
+        id: "CS271",
+        name: "Computer Architecture & Assembly Language",
+        prereqs: ["CS161"]
+    },
+    {
+        id: "CS261",
+        name: "Data Structures",
+        prereqs: ["CS162", "CS225"]
+    },
+    {
+        id: "CS290",
+        name: "Web Development",
+        prereqs: ["CS162"]
+    },
+    {
+        id: "CS340",
+        name: "Introduction to Databases",
+        prereqs: ["CS290"]
+    },
+    {
+        id: "CS325",
+        name: "Analysis of Algorithms",
+        prereqs: ["CS261", "CS225"]
+    },
+    {
+        id: "CS344",
+        name: "Operating Systems",
+        prereqs: ["CS261", "CS271"]
+    },
+    {
+        id: "CS361",
+        name: "Software Engineering I",
+        prereqs: ["CS261"]
+    },
+    {
+        id: "CS362",
+        name: "Software Engineering II",
+        prereqs: ["CS261"]
+    },
+    {
+        id: "CS372",
+        name: "Intro to Computer Networks",
+        prereqs: ["CS271", "CS261"]
+    },
+    {
+        id: "CS475",
+        name: "Parallel Programming",
+        elective: true,
+        prereqs: ["CS261"]
+    },
+    {
+        id: "CS373",
+        name: "Defense Against the Dark Arts",
+        elective: true,
+        prereqs: ["CS340", "CS372", "CS344"]
+    },
+    {
+        id: "CS464",
+        name: "Open Source Software Development",
+        elective: true,
+        prereqs: ["CS321"]
+    },
+    {
+        id: "CS496",
+        name: "Mobile and Cloud Software Development",
+        elective: true,
+        prereqs: ["CS344"]
+    },
+    {
+        id: "CS467",
+        name: "Software Projects",
+        elective: true,
+        prereqs: ["CS361"]
     }
 ];
 
