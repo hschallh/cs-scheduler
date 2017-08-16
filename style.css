@@ -43,9 +43,15 @@ button {
     font-weight: bold;
 }
 
-.ele {
-    color: #D0D0D0;
+.container>div.ele {
+    background-color: rgba(0, 0, 0, .35);
     font-style: italic;
+}
+
+.container>div.prereq {
+    background-color: rgba(0, 0, 0, .15);
+    cursor: default;
+    border-style: none;
 }
 
 
@@ -55,10 +61,12 @@ button {
     font-size: 16px;
     font-weight: normal;
     cursor: move;
+    cursor: grab;
     display: inherit;
     background: rgba(0, 0, 0, 0.45);
     margin: 5px;
     width: 90%;
+    border: 2px solid black;
 }
 
 .gu-mirror {

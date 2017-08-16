@@ -1,3 +1,20 @@
+var courses = [{
+        id: "CS161",
+        name: "Intro 1"
+    },
+    {
+        id: "CS162",
+        name: "Intro 2",
+        prereqs: ["CS161", "Test"]
+    },
+    {
+        id: "CS352",
+        name: "Introduction to Usability Engineering",
+        elective: true
+    }
+];
+
+
 var today, // Today's date
     oldestQuarter, // Date of the earliest quarter shown in the schedule
     newestQuarter, // Date of the lastest quarter shown in the schedule
@@ -12,14 +29,15 @@ console.log(today);
 var dragAndDrop = dragula({
     revertOnSpill: true,
     // Disallow anything but divs to be dragged
-    // TODO: Headers in containers still move within container
     invalid: function(el, handle) {
-        return el.tagName != "DIV";
+        return el.tagName != "DIV" || el.className.includes("prereq");
     }
 });
 
 // jquery after page loads
 $(function() {
+
+    buildCourses();
 
     // Label the initial quarter container with the current quarter
     $("#Q0").append(getQuarterName(today));
@@ -27,6 +45,20 @@ $(function() {
     // Add all of the places courses can be dragged to the drag and drop containers
     for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
 });
+
+function buildCourses() {
+    courses.forEach(function(course) {
+        var html = "<div id='" + course.id + "'";
+        if (course.elective) {
+            html += " class='ele'";
+        }
+        html += "><strong>" + course.id + "</strong> - " + course.name + "</div>";
+        $("#courses").append(html);
+        if (course.prereqs) {
+            $("#" + course.id).data(course.prereqs).addClass("prereq");
+        }
+    });
+}
 
 function getQuarterName(date) { return ["Wi", "Sp", "Su", "Fa"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
 
