@@ -139,6 +139,12 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
             if (satisfied) $("#" + course.id).removeClass("prereq");
         }
     });
+
+    // Now that all of the invalid classes are tagged, move any on the schedule
+    // back to the courses pane
+    $("#quarters *.prereq").each(function() {
+        $(sibling).before(this);
+    });
 });
 
 // jquery after page loads
