@@ -2,8 +2,8 @@ body {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #333;
-    background: #efefef;
+    color: #EEE;
+    background: #CC9179;
     margin: auto auto;
     max-width: 860px;
     min-width: 560px;
@@ -16,36 +16,46 @@ button {
 #wrapper {
     margin: auto;
     width: 90%;
-    height: 90%;
-    background: #eee;
+    max-height: 85%;
+    background: rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
 #wrapper>div {
     display: inline-block;
-    background: #ddd;
-    height: 100%;
-    width: 49%;
+    padding: 5px;
+    vertical-align: top;
+    background: rgba(0, 0, 0, 0.15);
+    max-height: 80%;
+    width: 47%;
     overflow-y: auto;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #quarters>* {
-    background: #ccc;
+    background: rgba(0, 0, 0, .25);
     margin: 5px;
-    min-height: 30px;
+    min-height: 50px;
     width: 90%;
     display: inherit;
-}
-
-.container>div {
-    display: inherit;
-    background: #fff;
-    margin: 5px;
-    width: 90%;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 
 /* DRAGULA */
+
+.container>div {
+    font-size: 16px;
+    font-weight: normal;
+    cursor: move;
+    cursor: grab;
+    display: inherit;
+    background: rgba(0, 0, 0, 0.45);
+    margin: 5px;
+    width: 90%;
+}
 
 .gu-mirror {
     position: fixed !important;
