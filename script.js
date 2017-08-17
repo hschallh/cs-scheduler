@@ -88,6 +88,8 @@ today.setDate(1);
 oldestQuarter = newestQuarter = today;
 console.log(today);
 
+removedContainers = [];
+
 // Setup drag and drop
 var dragAndDrop = dragula({
     revertOnSpill: true,
@@ -95,6 +97,35 @@ var dragAndDrop = dragula({
     invalid: function(el, handle) {
         return el.className.includes("prereq");
     }
+});
+
+dragAndDrop.on("drag", function(el, source) {
+    if (courses[el.id].prereqs) {
+        var latestValidQuarter = firstQuarterNum;
+        courses[el.id].prereqs.forEach(function(prereq) {
+            var prereqQuarter = +($("#" + prereq).parent().attr('id').slice(1));
+            if (prereqQuarter >= latestValidQuarter) {
+                latestValidQuarter = (el.id == "CS340") ? prereqQuarter : prereqQuarter + 1;
+            }
+        });
+        for (var i = firstQuarterNum; i < latestValidQuarter; i++) {
+            removedContainers.push("#Q" + i);
+            var index = dragAndDrop.containers.indexOf($("#Q" + i)[0]);
+            dragAndDrop.containers.splice(index, 1);
+            $("#Q" + i).addClass("invalid");
+        }
+        removedContainers.push("#prevButton");
+        var index = dragAndDrop.containers.indexOf($("#prevButton")[0]);
+        dragAndDrop.containers.splice(index, 1);
+        $("prevButton").addClass("invalid");
+    }
+});
+
+dragAndDrop.on("dragend", function() {
+    removedContainers.forEach(function(id) {
+        dragAndDrop.containers.push($(id)[0]);
+    });
+    removedContainers = [];
 });
 
 // Any time the schedule is changed
