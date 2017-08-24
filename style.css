@@ -50,7 +50,7 @@ button {
     color: #DDD;
 }
 
-.container>div.prereq {
+.container>div.unsatisfied {
     background-color: rgba(0, 0, 0, .15);
     cursor: default;
     border-style: none;
@@ -60,6 +60,9 @@ button {
     border: none;
 }
 
+.container>div.prereq {
+    background-color: rgba(255, 255, 255, .15);
+}
 
 /* DRAGULA */
 

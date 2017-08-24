@@ -46,7 +46,7 @@ var courses = {
         name: "Intro to Computer Networks",
         prereqs: ["CS271", "CS261"]
     },
-        CS467: {
+    CS467: {
         name: "Software Projects",
         prereqs: ["CS361"]
     },
@@ -92,7 +92,7 @@ var dragAndDrop = dragula({
     revertOnSpill: true,
     // Disallow anything but courses with satisfied prereqs to be moved
     invalid: function(el, handle) {
-        return el.className.includes("prereq");
+        return el.className.includes("unsatisfied");
     }
 });
 
@@ -154,8 +154,17 @@ $(function() {
             $("#" + id).attr("title", "Elective");
         }
         if (courses[id].prereqs) {
-            $("#" + id).addClass("prereq");
+            $("#" + id).addClass("unsatisfied");
             $("#" + id).attr("title", $("#" + id).attr("title") + ", Prereqs: " + courses[id].prereqs);
+            $("#" + id).hover(function() {
+                courses[this.id].prereqs.forEach(function(prereq) {
+                    $("#" + prereq).addClass("prereq");
+                });
+            }, function() {
+                courses[this.id].prereqs.forEach(function(prereq) {
+                    $("#" + prereq).removeClass("prereq");
+                });
+            });
         }
     }
 
@@ -223,7 +232,7 @@ function updatePrereqs(sibling, target) {
             courses[id].prereqs.forEach(function(prereq) {
                 if ($("#" + prereq).parent()[0] == $("#courses")[0]) {
                     // If this course's prereq course not been assigned to a quarter,disallow drag and drop
-                    $("#" + id).addClass("prereq");
+                    $("#" + id).addClass("unsatisfied");
                     satisfied = false;
 
                     // If this course had been assigned a quarter, move it back to the course bucket
@@ -238,7 +247,7 @@ function updatePrereqs(sibling, target) {
             });
 
             // If all this course's prereqs have been assigned a quarter, allow drag and drop
-            if (satisfied) $("#" + id).removeClass("prereq");
+            if (satisfied) $("#" + id).removeClass("unsatisfied");
         }
     }
 }
