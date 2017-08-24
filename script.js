@@ -150,7 +150,10 @@ $(function() {
         $("#courses").append(html);
 
         if (courses[id].elective) $("#" + id).addClass("ele");
-        if (courses[id].prereqs) $("#" + id).addClass("prereq");
+        if (courses[id].prereqs) {
+            $("#" + id).addClass("prereq");
+            $("#" + id).attr("title", "Prereqs: " + courses[id].prereqs);
+        }
     }
 
     // Label the initial quarter container with the current quarter
