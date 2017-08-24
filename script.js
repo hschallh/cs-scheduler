@@ -155,7 +155,7 @@ $(function() {
         }
         if (courses[id].prereqs) {
             $("#" + id).addClass("prereq");
-            $("#" + id).attr("title", $("#" + id).attr("title") + ", Prereqs: " + courses[id].prereqs);
+            $("#" + id).attr("title", $("#" + id).attr("title") || "" + " Prereqs: " + courses[id].prereqs);
         }
     }
 
