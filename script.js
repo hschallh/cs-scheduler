@@ -151,11 +151,9 @@ $(function() {
 
         if (courses[id].elective) {
             $("#" + id).addClass("ele");
-            $("#" + id).attr("title", "Elective");
         }
         if (courses[id].prereqs) {
             $("#" + id).addClass("unsatisfied");
-            $("#" + id).attr("title", $("#" + id).attr("title") || "" + ", Prereqs: " + courses[id].prereqs);
             $("#" + id).hover(function() {
                 courses[this.id].prereqs.forEach(function(prereq) {
                     $("#" + prereq).addClass("prereq");
