@@ -99,7 +99,7 @@ var dragAndDrop = dragula({
 // Any time a course is picked up
 dragAndDrop.on("drag", function(el, source) {
 
-    // Disallow drops into a quarter before a course's prereq
+    // Disallow drops into a quarter before its prereq
     if (courses[el.id].prereqs) {
         var earliestValidQuarter = getCoursesEarliestQuarter(el.id);
 
@@ -138,24 +138,7 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
         $("#" + newQuarter).append(el);
     }
 
-    // add prereq class to courses with unsatisfied prereqs by checking if the
-    // course prereqs are still in the courses container. Remove any courses that
-    // have lost a prereq
-    for (var id in courses) {
-        if (courses[id].prereqs) {
-            var satisfied = true;
-            courses[id].prereqs.forEach(function(prereq) {
-                if ($("#" + prereq).parent()[0] == $("#courses")[0]) {
-                    if ($("#" + id).parent().parent()[0] == $("#quarters")[0]) {
-                        $(sibling).before($("#" + id));
-                    }
-                    $("#" + id).addClass("prereq");
-                    satisfied = false;
-                }
-            });
-            if (satisfied) $("#" + id).removeClass("prereq");
-        }
-    }
+    updatePrereqs();
 });
 
 // jquery after page loads
@@ -225,6 +208,30 @@ function getCoursesLatestQuarter(id) {
 }
 
 
+// Remove courses from quarters if their prereq has been removed. Allow dragging
+// and dropping for courses whose prereqs have been satisfied.
+function updatePrereqs() {
+    for (var id in courses) {
+        if (courses[id].prereqs) {
+            var satisfied = true;
+            courses[id].prereqs.forEach(function(prereq) {
+                if ($("#" + prereq).parent()[0] == $("#courses")[0]) {
+                    // If this course's prereq course not been assigned to a quarter,disallow drag and drop
+                    $("#" + id).addClass("prereq");
+                    satisfied = false;
+
+                    // If this course had been assigned a quarter, move it back to the course bucket
+                    if ($("#" + id).parent().parent()[0] == $("#quarters")[0]) {
+                        $(sibling).before($("#" + id));
+                    }
+                }
+            });
+
+            // If all this course's prereqs have been assigned a quarter, allow drag and drop
+            if (satisfied) $("#" + id).removeClass("prereq");
+        }
+    }
+}
 
 // Get the name of a quarter as a two character string and year
 function getQuarterName(date) { return ["Wi", "Sp", "Su", "Fa"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
