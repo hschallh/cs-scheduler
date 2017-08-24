@@ -2,7 +2,7 @@ body {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #EEE;
+    color: #FFF;
     background: #dc9e85;
     margin: auto auto;
     max-width: 860px;
@@ -47,6 +47,7 @@ button {
 
 .container>div.ele {
     font-style: italic;
+    color: #DDD;
 }
 
 .container>div.prereq {

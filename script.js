@@ -10,11 +10,6 @@ var courses = {
         name: "Intro 2",
         prereqs: ["CS161"]
     },
-    CS352: {
-        name: "Introduction to Usability Engineering",
-        elective: true,
-        prereqs: ["CS161"]
-    },
     CS271: {
         name: "Computer Architecture & Assembly Language",
         prereqs: ["CS161"]
@@ -51,6 +46,15 @@ var courses = {
         name: "Intro to Computer Networks",
         prereqs: ["CS271", "CS261"]
     },
+        CS467: {
+        name: "Software Projects",
+        prereqs: ["CS361"]
+    },
+    CS352: {
+        name: "Introduction to Usability Engineering",
+        elective: true,
+        prereqs: ["CS161"]
+    },
     CS475: {
         name: "Parallel Programming",
         elective: true,
@@ -70,10 +74,6 @@ var courses = {
         name: "Mobile and Cloud Software Development",
         elective: true,
         prereqs: ["CS344"]
-    },
-    CS467: {
-        name: "Software Projects",
-        prereqs: ["CS361"]
     }
 };
 
@@ -149,10 +149,13 @@ $(function() {
         var html = "<div id='" + id + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
         $("#courses").append(html);
 
-        if (courses[id].elective) $("#" + id).addClass("ele");
+        if (courses[id].elective) {
+            $("#" + id).addClass("ele");
+            $("#" + id).attr("title", "Elective");
+        }
         if (courses[id].prereqs) {
             $("#" + id).addClass("prereq");
-            $("#" + id).attr("title", "Prereqs: " + courses[id].prereqs);
+            $("#" + id).attr("title", $("#" + id).attr("title") + ", Prereqs: " + courses[id].prereqs);
         }
     }
 
