@@ -12,6 +12,7 @@ body {
 
 button {
     color: black;
+    cursor: pointer;
 }
 
 #wrapper {
