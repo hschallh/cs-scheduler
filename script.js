@@ -138,7 +138,7 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
         $("#" + newQuarter).append(el);
     }
 
-    updatePrereqs();
+    updatePrereqs(sibling, target);
 });
 
 // jquery after page loads
@@ -216,7 +216,7 @@ function getCoursesLatestQuarter(id) {
 
 // Remove courses from quarters if their prereq has been removed. Allow dragging
 // and dropping for courses whose prereqs have been satisfied.
-function updatePrereqs() {
+function updatePrereqs(sibling, target) {
     for (var id in courses) {
         if (courses[id].prereqs) {
             var satisfied = true;
@@ -228,7 +228,11 @@ function updatePrereqs() {
 
                     // If this course had been assigned a quarter, move it back to the course bucket
                     if ($("#" + id).parent().parent()[0] == $("#quarters")[0]) {
-                        $(sibling).before($("#" + id));
+                        if ($("#" + id).hasClass('ele')) {
+                            $(target).append($("#" + id));
+                        } else {
+                            $(sibling).before($("#" + id));
+                        }
                     }
                 }
             });
