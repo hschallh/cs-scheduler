@@ -41,6 +41,7 @@ button {
     display: inherit;
     font-size: 18px;
     font-weight: bold;
+    border: 2px solid black;
 }
 
 .container>div.ele {
@@ -51,6 +52,10 @@ button {
     background-color: rgba(0, 0, 0, .15);
     cursor: default;
     border-style: none;
+}
+
+#quarters>.invalid {
+    border: none;
 }
 
 

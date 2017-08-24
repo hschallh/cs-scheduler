@@ -1,3 +1,4 @@
+// Classes with their codes, names, prereqs, and whether or not they are an elective
 var courses = {
     CS161: {
         name: "Intro 1"
@@ -72,11 +73,9 @@ var courses = {
     },
     CS467: {
         name: "Software Projects",
-        elective: true,
         prereqs: ["CS361"]
     }
 };
-
 
 var today, // Today's date
     oldestQuarter, // Date of the earliest quarter shown in the schedule
@@ -84,9 +83,7 @@ var today, // Today's date
     firstQuarterNum = 0; // Numeric representation of the first quarter (number of quarters before the current)
 
 today = new Date();
-today.setDate(1);
 oldestQuarter = newestQuarter = today;
-console.log(today);
 
 removedContainers = [];
 
@@ -99,36 +96,36 @@ var dragAndDrop = dragula({
     }
 });
 
+// Any time a course is picked up
 dragAndDrop.on("drag", function(el, source) {
+
+    // Disallow drops into a quarter before a course's prereq
     if (courses[el.id].prereqs) {
-        var latestValidQuarter = firstQuarterNum;
-        courses[el.id].prereqs.forEach(function(prereq) {
-            var prereqQuarter = +($("#" + prereq).parent().attr('id').slice(1));
-            if (prereqQuarter >= latestValidQuarter) {
-                latestValidQuarter = (el.id == "CS340") ? prereqQuarter : prereqQuarter + 1;
-            }
-        });
-        for (var i = firstQuarterNum; i < latestValidQuarter; i++) {
-            removedContainers.push("#Q" + i);
-            var index = dragAndDrop.containers.indexOf($("#Q" + i)[0]);
-            dragAndDrop.containers.splice(index, 1);
-            $("#Q" + i).addClass("invalid");
+        var earliestValidQuarter = getCoursesEarliestQuarter(el.id);
+
+        for (var i = firstQuarterNum; i < earliestValidQuarter; i++) {
+            removeContainer("#Q" + i);
         }
-        removedContainers.push("#prevButton");
-        var index = dragAndDrop.containers.indexOf($("#prevButton")[0]);
-        dragAndDrop.containers.splice(index, 1);
-        $("prevButton").addClass("invalid");
+        removeContainer("#prevButton");
+    }
+
+    // Disallow drops into a quarter after a course if it's one of its prereq
+    var latestValidQuarter = getCoursesLatestQuarter(el.id);
+
+    if (latestValidQuarter !== undefined) {
+        for (var i = latestValidQuarter + 1; i < getNumOfQuarters() + firstQuarterNum; i++) {
+            removeContainer(("#Q" + i));
+        }
+        removeContainer("#nextButton");
     }
 });
 
+// Any time a course is dropped
 dragAndDrop.on("dragend", function() {
-    removedContainers.forEach(function(id) {
-        dragAndDrop.containers.push($(id)[0]);
-    });
-    removedContainers = [];
+    restoreRemovedContainers();
 });
 
-// Any time the schedule is changed
+// Any time a course is moved to a quarter or the course bucket
 dragAndDrop.on("drop", function(el, target, source, sibling) {
 
     // If the course was dropped into a button, "click" the button and move the
@@ -142,7 +139,8 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
     }
 
     // add prereq class to courses with unsatisfied prereqs by checking if the
-    // course prereqs are still in the courses container.
+    // course prereqs are still in the courses container. Remove any courses that
+    // have lost a prereq
     for (var id in courses) {
         if (courses[id].prereqs) {
             var satisfied = true;
@@ -165,8 +163,7 @@ $(function() {
 
     // Build html elements for each of the courses
     for (var id in courses) {
-        var html = "<div id='" + id + "'";
-        html += "><strong>" + id + "</strong> - " + courses[id].name + "</div>";
+        var html = "<div id='" + id + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
         $("#courses").append(html);
 
         if (courses[id].elective) $("#" + id).addClass("ele");
@@ -180,12 +177,62 @@ $(function() {
     for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
 });
 
+// Diallow drops into a container
+function removeContainer(id) {
+    console.log("removing", id);
+    removedContainers.push(id);
+    $(id).addClass("invalid");
+    var index = dragAndDrop.containers.indexOf($(id)[0]);
+    dragAndDrop.containers.splice(index, 1);
+}
+
+// Reallow drops in any containers removed due to prereqs
+function restoreRemovedContainers() {
+    removedContainers.forEach(function(id) {
+        console.log("restoring", id);
+        dragAndDrop.containers.push($(id)[0]);
+        $(id).removeClass("invalid");
+    });
+    removedContainers = [];
+}
+
+// Get the earliest quarter a course with prereqs can be dropped into
+function getCoursesEarliestQuarter(id) {
+    var earliestValidQuarter = firstQuarterNum;
+
+    // Get the earliest quarter the course can be dropped into
+    courses[id].prereqs.forEach(function(prereq) {
+        var prereqQuarter = +($("#" + prereq).parent().attr('id').slice(1));
+        if (prereqQuarter >= earliestValidQuarter) {
+            earliestValidQuarter = (id == "CS340") ? prereqQuarter : prereqQuarter + 1;
+        }
+    });
+    return earliestValidQuarter;
+}
+
+// Get the latest quarter a course that is a prereq can be dropped into
+function getCoursesLatestQuarter(id) {
+    var latestValidQuarter;
+    $("#quarters>.container>*").each(function() {
+        if (courses[this.id].prereqs && courses[this.id].prereqs.indexOf(id) >= 0) {
+            var postreqQuarter = +($("#" + this.id).parent().attr('id').slice(1));
+            if (latestValidQuarter === undefined || postreqQuarter <= latestValidQuarter) {
+                latestValidQuarter = (this.id == "CS340") ? postreqQuarter : postreqQuarter - 1;
+            }
+        }
+    });
+    return latestValidQuarter;
+}
+
+
+
+// Get the name of a quarter as a two character string and year
 function getQuarterName(date) { return ["Wi", "Sp", "Su", "Fa"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
 
 // Get the current number of quarters displayed
 function getNumOfQuarters() { return $("#quarters>div").length; }
 
-// Add the next earliest quarter
+// Add a container for the next earliest quarter
 function addPrev() {
     var prevQuarter = new Date(oldestQuarter.getFullYear(), oldestQuarter.getMonth() - 3),
         id = "Q" + --firstQuarterNum;
@@ -198,7 +245,7 @@ function addPrev() {
     return id;
 }
 
-// Add the next latest quarter
+// Add a container for the next earliest quarter
 function addNext() {
     var nextQuarter = new Date(newestQuarter.getFullYear(), newestQuarter.getMonth() + 3),
         id = "Q" + (getNumOfQuarters() + firstQuarterNum);
