@@ -3,6 +3,9 @@ var courses = {
     CS161: {
         name: "Intro 1"
     },
+    CS165: {
+        name: "Intro I and II"
+    },
     CS225: {
         name: "Discrete Structures",
     },
@@ -76,6 +79,8 @@ var courses = {
         prereqs: ["CS344"]
     }
 };
+
+var cs165 = false;
 
 var today, // Today's date
     oldestQuarter, // Date of the earliest quarter shown in the schedule
@@ -165,6 +170,9 @@ $(function() {
             });
         }
     }
+
+    // Hide 165
+    $("#CS165").hide();
 
     // Label the initial quarter container with the current quarter
     $("#Q0").append(getQuarterName(today));
@@ -280,4 +288,48 @@ function addNext() {
     newestQuarter = nextQuarter;
 
     return id;
+}
+
+// Switch between using the cs165 option and 161/162
+
+function toggle165() {
+    if (cs165) {
+        // Update prereqs
+        courses.CS271.prereqs = ["CS161"];
+        courses.CS352.prereqs = ["CS161"];
+        courses.CS261.prereqs = ["CS162", "CS225"];
+        courses.CS290.prereqs = ["CS162"];
+
+        // Unhide new course and move it to where 161 was
+        $("#CS165").before($("#CS161"));
+        $("#CS161").show();
+        $("#CS162").show();
+
+        // Hide old courses and bove them back to the courses tab
+        $("#CS165").hide();
+        //$("#courses").prepend($("#CS165"));
+
+        updatePrereqs($("#CS161"), $("#CS165").parent());
+        cs165 = false;
+    } else {
+
+        // Update prereqs
+        courses.CS271.prereqs = ["CS165"];
+        courses.CS352.prereqs = ["CS165"];
+        courses.CS261.prereqs = ["CS165", "CS225"];
+        courses.CS290.prereqs = ["CS165"];
+
+        // Unhide new course and move it to where 161 was
+        $("#CS161").before($("#CS165"));
+        $("#CS165").show();
+
+        // Hide old courses and bove them back to the courses tab
+        $("#CS161").hide();
+        $("#CS162").hide();
+        //$("#courses").prepend($("#CS161"));
+        //$("#courses").prepend($("#CS162"));
+
+        updatePrereqs($("#CS161"), $("#CS165").parent());
+        cs165 = true;
+    }
 }
