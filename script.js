@@ -87,9 +87,6 @@ var today, // Today's date
     newestQuarter, // Date of the lastest quarter shown in the schedule
     firstQuarterNum = 0; // Numeric representation of the first quarter (number of quarters before the current)
 
-today = new Date();
-oldestQuarter = newestQuarter = today;
-
 removedContainers = [];
 
 // Setup drag and drop
@@ -149,6 +146,7 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
 // jquery after page loads
 $(function() {
 
+
     // Build html elements for each of the courses
     for (var id in courses) {
         var html = "<div id='" + id + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
@@ -174,14 +172,15 @@ $(function() {
     // Hide 165
     $("#CS165").hide();
 
-    // Label the initial quarter container with the current quarter
-    $("#Q0").append(getQuarterName(today));
-
     // register all of the places courses can be dragged to with the drag/drop handler
     for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
+
+    // Label the initial quarter container with the current quarter
+    parseLink();
+    $("#Q0").prepend(getQuarterName(today));
 });
 
-// Diallow drops into a container
+// Disallow drops into a container
 function removeContainer(id) {
     removedContainers.push(id);
     $(id).addClass("invalid");
@@ -331,9 +330,11 @@ function toggle165() {
     }
 }
 
+// Display an alert with a link to the current schedule
 function alertUrl() {
-    var qtr = $("#quarters>div:first").clone().children().remove().end().text().replace(' - 20', '');
-    var str = "?cs165=" + cs165 + "&st=" + qtr + "&data=";
+    var qtr = oldestQuarter.getTime();
+    var str = "?st=" + qtr + "&data=";
+    if (cs165) str += "&cs165=true";
     $("#quarters>div").each(function() {
         str += "-";
         $(this).children().each(function() {
@@ -344,4 +345,30 @@ function alertUrl() {
     vex.dialog.alert({
         unsafeMessage: '<b>Use this link to share your schedule:\n<a href=' + url + '>' + url + '</b>'
     });
+}
+
+// Set up a schedule based on the current link
+function parseLink() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("cs165")) {
+        $("#chk165").prop('checked', true);
+        toggle165();
+    }
+    today = params.get("st") ? new Date(+params.get("st")) : new Date();
+    oldestQuarter = newestQuarter = today;
+
+    var data = params.get("data");
+    if (data) {
+        var quarters = data.split('-');
+        quarters.shift();
+        quarters.forEach(function(quarter, i) {
+            var quarterId = i ? addNext() : "Q0";
+            var classes = quarter.split(" ");
+            classes.shift();
+            classes.forEach(function(classId) {
+                $("#" + quarterId).append($("#" + classId));
+            });
+        });
+        updatePrereqs($("#courses div:first"), $("#courses"));
+    }
 }
