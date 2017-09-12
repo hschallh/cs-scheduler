@@ -183,7 +183,6 @@ $(function() {
 
 // Diallow drops into a container
 function removeContainer(id) {
-    console.log("removing", id);
     removedContainers.push(id);
     $(id).addClass("invalid");
     var index = dragAndDrop.containers.indexOf($(id)[0]);
@@ -193,7 +192,6 @@ function removeContainer(id) {
 // Reallow drops in any containers removed due to prereqs
 function restoreRemovedContainers() {
     removedContainers.forEach(function(id) {
-        console.log("restoring", id);
         dragAndDrop.containers.push($(id)[0]);
         $(id).removeClass("invalid");
     });
@@ -259,7 +257,7 @@ function updatePrereqs(sibling, target) {
 }
 
 // Get the name of a quarter as a two character string and year
-function getQuarterName(date) { return ["Wi", "Sp", "Su", "Fa"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
+function getQuarterName(date) { return ["Winter", "Spring", "Summer", "Fall"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
 
 // Get the current number of quarters displayed
 function getNumOfQuarters() { return $("#quarters>div").length; }
@@ -291,7 +289,6 @@ function addNext() {
 }
 
 // Switch between using the cs165 option and 161/162
-
 function toggle165() {
     if (cs165) {
         // Update prereqs
@@ -307,7 +304,7 @@ function toggle165() {
 
         // Hide old courses and bove them back to the courses tab
         $("#CS165").hide();
-        //$("#courses").prepend($("#CS165"));
+        $("#courses div:first").before($("#CS165"));
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = false;
@@ -326,10 +323,25 @@ function toggle165() {
         // Hide old courses and bove them back to the courses tab
         $("#CS161").hide();
         $("#CS162").hide();
-        //$("#courses").prepend($("#CS161"));
-        //$("#courses").prepend($("#CS162"));
+        $("#courses div:first").before($("#CS161"));
+        $("#courses div:first").after($("#CS162"));
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = true;
     }
+}
+
+function alertUrl() {
+    var qtr = $("#quarters>div:first").clone().children().remove().end().text().replace(' - 20', '');
+    var str = "?cs165=" + cs165 + "&st=" + qtr + "&data=";
+    $("#quarters>div").each(function() {
+        str += "-";
+        $(this).children().each(function() {
+            str += "+" + this.id;
+        });
+    });
+    var url = "https://hschallh.github.io/cs-scheduler/" + str;
+    vex.dialog.alert({
+        unsafeMessage: '<b>Use this link to share your schedule:\n<a href=' + url + '>' + url + '</b>'
+    });
 }

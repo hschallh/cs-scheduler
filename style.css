@@ -64,6 +64,12 @@ button {
     background-color: rgba(255, 255, 255, .15);
 }
 
+div.vex.vex-theme-wireframe div.vex-content {
+    background: #dc9e85;
+    color: #fff;
+}
+
+
 /* DRAGULA */
 
 .container>div {

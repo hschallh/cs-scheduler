@@ -1,7 +1,9 @@
 <head>
     <title>OSU Online CS</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="dist/dragula.min.css" type="text/css">
+    <link rel="stylesheet" href="dist/vex.css" />
+    <link rel="stylesheet" href="dist/vex-theme-wireframe.css" />
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
 <body>
@@ -9,6 +11,7 @@
     <label>
         <input type="checkbox" onclick="toggle165()"> Use 165 over 161/162
     </label>
+    <button onclick='alertUrl()'>Log String</button>
     <div id='wrapper'>
         <div id='courses' class='container'>COURSES
         </div>
@@ -19,6 +22,10 @@
         </div>
     </div>
     <script src='dist/dragula.min.js'></script>
+    <script src="dist/vex.combined.min.js"></script>
+    <script>
+        vex.defaultOptions.className = 'vex-theme-wireframe'
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src='script.js'></script>
 </body>
