@@ -61,17 +61,20 @@ var courses = {
     CS475: {
         name: "Parallel Programming",
         elective: true,
-        prereqs: ["CS261"]
+        prereqs: ["CS261"],
+        restrictedTo: "Spring"
     },
     CS373: {
         name: "Defense Against the Dark Arts",
         elective: true,
-        prereqs: ["CS340", "CS372", "CS344"]
+        prereqs: ["CS340", "CS372", "CS344"],
+        restrictedTo: "Winter"
     },
     CS464: {
         name: "Open Source Software Development",
         elective: true,
-        prereqs: ["CS361"]
+        prereqs: ["CS361"],
+        restrictedTo: "Spring"
     },
     CS496: {
         name: "Mobile and Cloud Software Development",
@@ -138,6 +141,11 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
     } else if (target.id == "nextButton") {
         var newQuarter = addNext();
         $("#" + newQuarter).append(el);
+    }
+
+    // If the course has a semester restriction, warn the user
+    if (courses[el.id].restrictedTo && !$(el).parent().text().startsWith(courses[el.id].restrictedTo)) {
+        console.log("bad");
     }
 
     updatePrereqs(sibling, target);
