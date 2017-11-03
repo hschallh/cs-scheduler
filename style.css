@@ -52,7 +52,7 @@ button.container {
 .hamburger {
     background: none;
     color: inherit;
-    font-size: inherit;
+    font-size: 20px;
     border: none;
     font-weight: bold;
     text-align: right;
