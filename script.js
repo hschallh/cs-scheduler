@@ -51,7 +51,7 @@ var courses = {
     },
     CS467: {
         name: "Software Projects",
-        prereqs: ["CS361"]
+        prereqs: ["CS361", "CS344"]
     },
     CS352: {
         name: "Introduction to Usability Engineering",
@@ -74,7 +74,7 @@ var courses = {
         name: "Open Source Software Development",
         elective: true,
         prereqs: ["CS361"],
-        restrictedTo: "Spring"
+        restrictedTo: "Winter"
     },
     CS496: {
         name: "Mobile and Cloud Software Development",
