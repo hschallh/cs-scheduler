@@ -76,6 +76,11 @@ var courses = {
         prereqs: ["CS361"],
         restrictedTo: "Winter"
     },
+    CS493: {
+	name: "Cloud Software Development",
+	elective: true,
+	prereqs: ["CS290", "CS340", "CS372"]
+    },
     CS496: {
         name: "Mobile and Cloud Software Development",
         elective: true,
