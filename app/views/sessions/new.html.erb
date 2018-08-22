@@ -1,17 +1,10 @@
-<h1>Log In</h1>
-
-<%= form_tag sessions_path, method: :post do %>
-    <div>
-        <%= label_tag :email %>
-        <%= email_field_tag :email %>
-    </div>
-
-    <div>
-        <%= label_tag :password %>
-        <%= password_field_tag :password %>
-    </div>
-
-    <%= submit_tag 'Log In!' %>
-<% end %>
-
-<%= link_to 'Register', new_user_path %>
+<div class="vsc-initialized" id="signin">
+  <%= form_tag sessions_path, class: "form-signin needs-validation", novalidate: true, method: :post do %>
+    <h1 class="text-center h3 mb-3 font-weight-normal">Sign in</h1>
+    <%= label_tag 'email', nil, class: "sr-only" %>
+    <%= email_field_tag 'email', nil, class: "form-control", placeholder: "Email address", required: true, autofocus: true %>
+    <%= label_tag 'password', nil, class: "sr-only" %>
+    <%= password_field_tag 'password', nil, class: "form-control", placeholder: "Password", required: true %>
+    <%= submit_tag 'Sign in', class: "btn btn-lg btn-primary btn-block bg-beaver" %>
+  <% end %>
+</div>
