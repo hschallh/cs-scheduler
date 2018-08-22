@@ -9,13 +9,14 @@ class SessionsController < ApplicationController
             flash[:success] = "Welcome back!"
             redirect_to root_path
         else
-            flash[:warning] = "You have entered incorrect email and/or password."
+            flash.now[:warning] = "You have entered incorrect email and/or password."
             render :new
         end
     end
   
     def destroy
         session.delete(:user_id)
+        flash[:success] = "You have successfully been logged out"
         redirect_to root_path
     end
   end

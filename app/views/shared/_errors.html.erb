@@ -1,11 +1,32 @@
-<% if object.errors.any? %>
+<% if flash[:success] %>
     <div>
-        <h5>Some errors were found:</h5>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= flash[:success] %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+<% end %>
 
-        <ul>
-        <% object.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-        </ul>
+<% if flash[:warning] %>
+    <div>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= flash[:warning] %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+<% end %>
+
+<% if object and object.errors.any? %>
+    <div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= object.errors.full_messages[0] %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
 <% end %>
