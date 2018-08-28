@@ -315,7 +315,7 @@ function removePrev() {
 
     // Don't remove the last quarter
     if (getNumOfQuarters() != 1) {
-        var index = dragAndDrop.containers.indexOf($(id)[0]);
+        var index = dragAndDrop.containers.indexOf($("#" + id)[0]);
         dragAndDrop.containers.splice(index, 1);
 
         $("#" + id).children().each(function() {
@@ -339,7 +339,7 @@ function removeNext() {
 
     // Don't remove the last quarter
     if (getNumOfQuarters() != 1) {
-        var index = dragAndDrop.containers.indexOf($(id)[0]);
+        var index = dragAndDrop.containers.indexOf($("#" + id)[0]);
         dragAndDrop.containers.splice(index, 1);
 
         $("#" + id).children().each(function() {
