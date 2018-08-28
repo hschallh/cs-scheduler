@@ -128,11 +128,19 @@ dragAndDrop.on("drag", function(el, source) {
         }
         removeContainer("#nextButton");
     }
+
+    // Visually indicate - buttons are not containers
+    $("#removePrevButton").addClass("invalid");
+    $("#removeNextButton").addClass("invalid");
 });
 
 // Any time a course is dropped
 dragAndDrop.on("dragend", function() {
     restoreRemovedContainers();
+
+    // Restore look of buttons
+    $("#removePrevButton").removeClass("invalid");
+    $("#removeNextButton").removeClass("invalid");
 });
 
 // Any time a course is moved to a quarter or the course bucket
@@ -298,6 +306,55 @@ function addNext() {
     newestQuarter = nextQuarter;
 
     return id;
+}
+
+// Remove the first quarter
+function removePrev() {
+    var nextQuarter = new Date(oldestQuarter.getFullYear(), oldestQuarter.getMonth() + 3),
+        id = "Q" + firstQuarterNum;
+
+    // Don't remove the last quarter
+    if (getNumOfQuarters() != 1) {
+        var index = dragAndDrop.containers.indexOf($(id)[0]);
+        dragAndDrop.containers.splice(index, 1);
+
+        $("#" + id).children().each(function() {
+            // Move any class in this quarter to the courses container
+            // Don't need to check for electives because no electives can be in the first quarter?
+            $("#courses :first-child")[0].after(this);
+            updatePrereqs($(this), $("#courses"));
+        });
+
+        $("#" + id).remove();
+
+        firstQuarterNum++;
+        oldestQuarter = nextQuarter;
+    }
+}
+
+// Remove the last quarter
+function removeNext() {
+    var prevQuarter = new Date(newestQuarter.getFullYear(), newestQuarter.getMonth() - 3),
+        id = "Q" + (getNumOfQuarters() + firstQuarterNum - 1);
+
+    // Don't remove the last quarter
+    if (getNumOfQuarters() != 1) {
+        var index = dragAndDrop.containers.indexOf($(id)[0]);
+        dragAndDrop.containers.splice(index, 1);
+
+        $("#" + id).children().each(function() {
+            if ($(this).hasClass('ele')) {
+                $("#courses").append($(this));
+            } else {
+                $("#courses :first-child")[0].after(this);
+            }
+            updatePrereqs($(this), $("#courses"));
+        });
+
+        $("#" + id).remove();
+
+        newestQuarter = prevQuarter;
+    }
 }
 
 // Switch between using the cs165 option and 161/162

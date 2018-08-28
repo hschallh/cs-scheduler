@@ -14,8 +14,7 @@ h1 {
     margin-top: 0;
 }
 
-button.container {
-    color: black;
+button {
     cursor: pointer;
 }
 
@@ -103,7 +102,7 @@ div.vex.vex-theme-wireframe div.vex-content {
     border: 1px solid black;
     cursor: pointer;
 }
-    
+
 
 /* DRAGULA */
 
