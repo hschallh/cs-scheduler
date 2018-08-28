@@ -403,8 +403,9 @@ function toggle165() {
 // Display an alert with a link to the current schedule
 function alertUrl() {
     var qtr = oldestQuarter.getTime();
-    var str = "?st=" + qtr + "&data=";
+    var str = "?st=" + qtr;
     if (cs165) str += "&cs165=true";
+    str += "&data=";
     $("#quarters>div").each(function() {
         str += "-";
         $(this).children().each(function() {
