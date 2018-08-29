@@ -2,6 +2,7 @@
   <%= form_for @user, html: {class: "form-signin needs-validation", novalidate: true } do |f|%>
     <h1 class="text-center h3 mb-3 font-weight-normal">Register</h1>
     <%= f.email_field :email, class: "form-control", placeholder: "Email address", required: true, autofocus: true %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Name", required: true %>
     <%= f.password_field :password, class: "form-control", placeholder: "Password", required: true %>
     <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Retype password", required: true %>
     <%= f.submit 'Sign in', class: "btn btn-lg btn-primary btn-block bg-beaver" %>
