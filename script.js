@@ -1,16 +1,16 @@
 // Classes with their codes, names, prereqs, and whether or not they are an elective
 var courses = {
-    CS161: {
-        name: "Intro 1"
-    },
     CS165: {
-        name: "Intro I and II"
+        name: "Introduction to Computer Science I/II"
+    },
+    CS161: {
+        name: "Introduction to Computer Science I"
     },
     CS225: {
         name: "Discrete Structures",
     },
     CS162: {
-        name: "Intro 2",
+        name: "Introduction to Computer Science II",
         prereqs: ["CS161"]
     },
     CS271: {
@@ -62,29 +62,38 @@ var courses = {
         name: "Parallel Programming",
         elective: true,
         prereqs: ["CS261"],
-        restrictedTo: "Spring"
+        restrictedTo: ["Spring"]
     },
     CS373: {
         name: "Defense Against the Dark Arts",
         elective: true,
         prereqs: ["CS340", "CS372", "CS344"],
-        restrictedTo: "Winter"
+        restrictedTo: ["Winter", "Summer"]
     },
     CS464: {
         name: "Open Source Software Development",
         elective: true,
-        prereqs: ["CS361"],
-        restrictedTo: "Winter"
+        prereqs: ["CS361"]
+    },
+    CS492: {
+        name: "Mobile Software Development",
+        elective: true,
+        prereqs: ["CS344"],
+        restrictedTo: ["2019"],
+        note: "This class's availablility and prereqs are purely speculation"
     },
     CS493: {
-	name: "Cloud Software Development",
-	elective: true,
-	prereqs: ["CS290", "CS340", "CS372"]
+        name: "Cloud Software Development",
+        elective: true,
+        prereqs: ["CS290", "CS340", "CS372"],
+        restrictedTo: ["Fall - 2018", "Winter - 2019"],
+        note: "This class is only confirmed for the Fall 2018 and Winter 2019 semesters"
     },
     CS496: {
         name: "Mobile and Cloud Software Development",
         elective: true,
-        prereqs: ["CS344"]
+        prereqs: ["CS344"],
+        note: "This class is no longer available as of the summer 2018"
     }
 };
 
@@ -93,7 +102,7 @@ var cs165 = false;
 var today, // Today's date
     oldestQuarter, // Date of the earliest quarter shown in the schedule
     newestQuarter, // Date of the lastest quarter shown in the schedule
-    firstQuarterNum = 0; // Numeric representation of the first quarter (number of quarters before the current)
+    firstQuarterNum = 0; // Numeric representation of the first quarter (number of quarters after the current)
 
 removedContainers = [];
 
@@ -138,7 +147,7 @@ dragAndDrop.on("drag", function(el, source) {
 dragAndDrop.on("dragend", function() {
     restoreRemovedContainers();
 
-    // Restore look of buttons
+    // Restore look of - buttons
     $("#removePrevButton").removeClass("invalid");
     $("#removeNextButton").removeClass("invalid");
 });
@@ -170,11 +179,11 @@ $(function() {
 
     // Build html elements for each of the courses
     for (var id in courses) {
-        var html = "<div id='" + id + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
+        var html = "<div id='" + id + "' class='list-group-item'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
         $("#courses").append(html);
 
         if (courses[id].elective) {
-            $("#" + id).addClass("ele");
+            $("#" + id).addClass("elective");
         }
         if (courses[id].prereqs) {
             $("#" + id).addClass("unsatisfied");
@@ -194,7 +203,7 @@ $(function() {
     $("#CS165").hide();
 
     // register all of the places courses can be dragged to with the drag/drop handler
-    for (var i = 0; i < $(".container").length; dragAndDrop.containers.push($(".container")[i++]));
+    for (var i = 0; i < $(".dragula-container").length; dragAndDrop.containers.push($(".dragula-container")[i++]));
 
     // Label the initial quarter container with the current quarter
     parseLink();
@@ -235,7 +244,7 @@ function getCoursesEarliestQuarter(id) {
 // Get the latest quarter a course that is a prereq can be dropped into
 function getCoursesLatestQuarter(id) {
     var latestValidQuarter;
-    $("#quarters>.container>*").each(function() {
+    $("#quarters>.dragula-container>*").each(function() {
         if (courses[this.id].prereqs && courses[this.id].prereqs.indexOf(id) >= 0) {
             var postreqQuarter = +($("#" + this.id).parent().attr('id').slice(1));
             if (latestValidQuarter === undefined || postreqQuarter <= latestValidQuarter) {
@@ -261,10 +270,10 @@ function updatePrereqs(sibling, target) {
 
                     // If this course had been assigned a quarter, move it back to the course bucket
                     if ($("#" + id).parent().parent()[0] == $("#quarters")[0]) {
-                        if ($("#" + id).hasClass('ele')) {
+                        if ($("#" + id).hasClass('elective')) {
                             $(target).append($("#" + id));
                         } else {
-                            $(sibling).before($("#" + id));
+                            $(sibling).after($("#" + id));
                         }
                     }
                 }
@@ -277,17 +286,21 @@ function updatePrereqs(sibling, target) {
 }
 
 // Get the name of a quarter as a two character string and year
-function getQuarterName(date) { return ["Winter", "Spring", "Summer", "Fall"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear(); }
+function getQuarterName(date) {
+    return ["Winter", "Spring", "Summer", "Fall"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear();
+}
 
 // Get the current number of quarters displayed
-function getNumOfQuarters() { return $("#quarters>div").length; }
+function getNumOfQuarters() {
+    return $("#quarters>div:not(.list-group-horizontal)").length;
+}
 
 // Add a container for the next earliest quarter
 function addPrev() {
     var prevQuarter = new Date(oldestQuarter.getFullYear(), oldestQuarter.getMonth() - 3),
         id = "Q" + --firstQuarterNum;
 
-    $("#prevButton").after("<div id='" + id + "' class='container'>" + getQuarterName(prevQuarter) + "</div>");
+    $("#quarters>:first-child").after("<div id='" + id + "' class='dragula-container list-group-item'>" + getQuarterName(prevQuarter) + "</div>");
     dragAndDrop.containers.push($("#" + id)[0]);
 
     oldestQuarter = prevQuarter;
@@ -300,7 +313,7 @@ function addNext() {
     var nextQuarter = new Date(newestQuarter.getFullYear(), newestQuarter.getMonth() + 3),
         id = "Q" + (getNumOfQuarters() + firstQuarterNum);
 
-    $("#nextButton").before("<div id='" + id + "' class='container'>" + getQuarterName(nextQuarter) + "</div>");
+    $("#quarters>:last-child").before("<div id='" + id + "' class='dragula-container list-group-item'>" + getQuarterName(nextQuarter) + "</div>");
     dragAndDrop.containers.push($("#" + id)[0]);
 
     newestQuarter = nextQuarter;
@@ -321,7 +334,7 @@ function removePrev() {
         $("#" + id).children().each(function() {
             // Move any class in this quarter to the courses container
             // Don't need to check for electives because no electives can be in the first quarter?
-            $("#courses :first-child")[0].after(this);
+            $("#courses>:first-child").after(this);
             updatePrereqs($(this), $("#courses"));
         });
 
@@ -343,10 +356,10 @@ function removeNext() {
         dragAndDrop.containers.splice(index, 1);
 
         $("#" + id).children().each(function() {
-            if ($(this).hasClass('ele')) {
+            if ($(this).hasClass('elective')) {
                 $("#courses").append($(this));
             } else {
-                $("#courses :first-child")[0].after(this);
+                $("#courses>:first-child").after(this);
             }
             updatePrereqs($(this), $("#courses"));
         });
@@ -367,13 +380,13 @@ function toggle165() {
         courses.CS290.prereqs = ["CS162"];
 
         // Unhide new course and move it to where 161 was
-        $("#CS165").before($("#CS161"));
+        $("#CS165").after($("#CS161"));
         $("#CS161").show();
         $("#CS162").show();
 
-        // Hide old courses and bove them back to the courses tab
+        // Hide old courses and move them back to the courses tab
         $("#CS165").hide();
-        $("#courses div:first").before($("#CS165"));
+        $("#courses>:first-child").before($("#CS165"));
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = false;
@@ -389,11 +402,11 @@ function toggle165() {
         $("#CS161").before($("#CS165"));
         $("#CS165").show();
 
-        // Hide old courses and bove them back to the courses tab
+        // Hide old courses and move them back to the courses tab
         $("#CS161").hide();
         $("#CS162").hide();
-        $("#courses div:first").before($("#CS161"));
-        $("#courses div:first").after($("#CS162"));
+        $("#courses>:first-child").before($("#CS161"));
+        $("#courses>:first-child").after($("#CS162"));
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = true;
@@ -406,7 +419,7 @@ function alertUrl() {
     var str = "?st=" + qtr;
     if (cs165) str += "&cs165=true";
     str += "&data=";
-    $("#quarters>div").each(function() {
+    $("#quarters>div:not(.list-group-horizontal)").each(function() {
         str += "-";
         $(this).children().each(function() {
             str += "+" + this.id;
@@ -440,6 +453,6 @@ function parseLink() {
                 $("#" + quarterId).append($("#" + classId));
             });
         });
-        updatePrereqs($("#courses div:first"), $("#courses"));
+        updatePrereqs($("#courses>:first-child"), $("#courses"));
     }
 }

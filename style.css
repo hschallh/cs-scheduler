@@ -1,53 +1,159 @@
+/* SCROLLBAR */
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    display: block;
+    overflow: auto;
+    width: 5px;
+    height: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+html,
 body {
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #FFF;
-    background: #dc9e85;
-    margin: auto auto;
-    max-width: 860px;
-    min-width: 560px;
-    text-align: center;
+    height: 100%;
 }
 
-h1 {
-    margin-top: 0;
+#content {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
 
-button {
+.row {
+    flex: 1 1 auto;
+}
+
+.list-group-item {
+    padding: .5rem .75rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* + / - SEMESTER BUTTONS */
+#quarters div[id$='Button'] {
     cursor: pointer;
 }
 
-#wrapper {
-    margin: auto;
-    width: 90%;
-    max-height: 95%;
-    background: rgba(0, 0, 0, 0.05);
+.list-group-horizontal {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    border: none;
+    min-height: 43px;
 }
 
-#wrapper>div {
-    display: inline-block;
-    margin: 5px;
+.list-group-horizontal .list-group-item:first-child {
+    border-right-width: 0;
+    width: 85%;
+}
+
+.list-group-horizontal .list-group-item:last-child {
+    border-right-width: 1px;
+    width: 15%;
+}
+
+.list-group-horizontal:first-child :first-child {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: .25rem;
+}
+
+.list-group-horizontal:first-child :last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: .25rem;
+}
+
+.list-group-horizontal:last-child :first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: .25rem;
+    margin-bottom: 0;
+}
+
+.list-group-horizontal:last-child :last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: .25rem;
+}
+
+/* COURSE AND QUARTER CONTAINERS */
+#courses,
+#quarters {
+    overflow-y: scroll;
     vertical-align: top;
-    background: rgba(0, 0, 0, 0.15);
-    max-height: 90%;
-    width: 47%;
-    overflow-y: auto;
-    font-size: 20px;
-    font-weight: bold;
+    max-height: 85%;
 }
 
+#quarters,
+.col-md:last-child {
+    padding-left: 0px;
+    padding-right: 15px;
+}
+
+#courses,
+.col-md:first-child {
+    padding-right: 0px;
+    padding-left: 15px;
+}
+
+/* replicate :first-child styling when the real first child is hidden */
+.list-group-item[style*='display: none']+.list-group-item:not([style*='display: none']) {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+/* All divs in the quarter container */
 #quarters>* {
-    background: rgba(0, 0, 0, .25);
-    margin: 5px;
-    min-height: 50px;
-    width: 90%;
-    display: inherit;
-    font-size: 18px;
+    width: 95%;
     font-weight: bold;
-    border: 2px solid black;
 }
 
+/* all drag and droppable divs */
+.dragula-container>div {
+    font-weight: normal;
+    cursor: move;
+    cursor: grab;
+    background: #dc9e85;
+    width: 95%;
+    min-width: 95%;
+}
+
+/* Electives */
+.dragula-container>div.elective {
+    color: #666;
+    font-style: italic;
+}
+
+/* Cannot be picked up or dropped into */
+.dragula-container>div.unsatisfied{
+    background: #fff;
+    cursor: default;
+}
+.invalid {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+/* The hovered course's prereq */
+.dragula-container>div.prereq {
+    background: #e64100;
+    color: #fff;
+}
+
+/* OPTIONS BAR */
 .hamburger {
     background: none;
     color: inherit;
@@ -58,35 +164,12 @@ button {
     float: right;
 }
 
-.container>div.ele {
-    font-style: italic;
-    color: #DDD;
-}
-
-.container>div.unsatisfied {
-    background-color: rgba(0, 0, 0, .15);
-    cursor: default;
-    border-style: none;
-}
-
-#quarters>.invalid {
-    border: none;
-}
-
-.container>div.prereq {
-    background-color: rgba(255, 255, 255, .15);
-}
-
-div.vex.vex-theme-wireframe div.vex-content {
-    background: #dc9e85;
-    color: #fff;
-}
-
 .sidebar {
     margin: 0;
-    background: rgba(0, 0, 0, 0.15);
+    background: #dc9e85;
     transition: all .1s;
     max-height: 1000px;
+    flex: 0 1 auto;
 }
 
 .sidebar.collapsed {
@@ -103,21 +186,7 @@ div.vex.vex-theme-wireframe div.vex-content {
     cursor: pointer;
 }
 
-
 /* DRAGULA */
-
-.container>div {
-    font-size: 16px;
-    font-weight: normal;
-    cursor: move;
-    cursor: grab;
-    display: inherit;
-    background: rgba(0, 0, 0, 0.45);
-    margin: 5px;
-    width: 90%;
-    border: 2px solid black;
-}
-
 .gu-mirror {
     position: fixed !important;
     margin: 0 !important;

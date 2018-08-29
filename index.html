@@ -3,11 +3,12 @@
     <link rel="stylesheet" href="dist/dragula.min.css" type="text/css">
     <link rel="stylesheet" href="dist/vex.css" />
     <link rel="stylesheet" href="dist/vex-theme-wireframe.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
 <body>
-    <div class="sidebar collapsed" id="sidebar">
+    <div class="sidebar collapsed text-center container" id="sidebar">
         <label>
             <input id=chk165 type="checkbox" onclick="toggle165()"> Use 165 over 161/162
         </label>
@@ -15,24 +16,36 @@
         <button onclick='window.location.reload()'>Reset Schedule</button>
         <button onclick='window.location.href="https://hschallh.github.io/cs-scheduler/"'>Clear Schedule</button>
     </div>
-    <button onclick="$('#sidebar').toggleClass('collapsed')" class="hamburger">&#9776;</button>
-    <h1 style='display: "inline"'>OSU Online CS Scheduler</h1>
-    <div id='wrapper'>
-        <div id='courses' class='container'>COURSES
+
+    <div class="py-1 text-center container-fluid" id="content">
+        <button onclick="$('#sidebar').toggleClass('collapsed')" class="hamburger">&#9776;</button>
+        <h1>OSU Online CS Scheduler</h1>
+        <div class="row">
+            <div class='col-md'>
+                <div id='courses' class='container dragula-container list-group'></div>
+            </div>
+            <div class='col-md'>
+                <div id='quarters' class='container list-group'>
+                    <div class='list-group-item list-group-horizontal'>
+                        <div class='list-group-item dragula-container' id='prevButton' onclick='addPrev()'>+</div>
+                        <div class='list-group-item' id='removePrevButton' onclick='removePrev()'>-</div>
+                    </div>
+                    <div id='Q0' class='dragula-container list-group-item'></div>
+                    <div class='list-group-item list-group-horizontal'>
+                        <div class='list-group-item dragula-container' id="nextButton" onclick='addNext()'>+</div>
+                        <div class='list-group-item' id='removeNextButton' onclick='removeNext()'>-</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id='quarters'>QUARTERS
-            <button id='removePrevButton' onclick='removePrev()'>-</button>
-            <button id='prevButton' onclick='addPrev()' class='container'>+</button>
-            <div id='Q0' class='container'></div>
-            <button id="nextButton" onclick='addNext()' class='container'>+</button>
-            <button id='removeNextButton' onclick='removeNext()'>-</button>
-        </div>
+        <script src='dist/dragula.min.js'></script>
+        <script src="dist/vex.combined.min.js"></script>
+        <script>
+            vex.defaultOptions.className = 'vex-theme-wireframe'
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src='script.js'></script>
     </div>
-    <script src='dist/dragula.min.js'></script>
-    <script src="dist/vex.combined.min.js"></script>
-    <script>
-        vex.defaultOptions.className = 'vex-theme-wireframe'
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src='script.js'></script>
 </body>
