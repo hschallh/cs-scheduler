@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user.id
             flash[:success] = "Welcome back!"
-            redirect_to root_path
+            redirect_to profile_path
         else
             flash.now[:warning] = "You have entered incorrect email and/or password."
             render :new
