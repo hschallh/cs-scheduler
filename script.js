@@ -6,12 +6,12 @@ var courses = {
     CS161: {
         name: "Introduction to Computer Science I"
     },
-    CS225: {
-        name: "Discrete Structures",
-    },
     CS162: {
         name: "Introduction to Computer Science II",
         prereqs: ["CS161"]
+    },
+    CS225: {
+        name: "Discrete Structures",
     },
     CS271: {
         name: "Computer Architecture & Assembly Language",
@@ -405,8 +405,8 @@ function toggle165() {
         // Hide old courses and move them back to the courses tab
         $("#CS161").hide();
         $("#CS162").hide();
-        $("#courses>:first-child").before($("#CS161"));
         $("#courses>:first-child").after($("#CS162"));
+        $("#courses>:first-child").before($("#CS161"));
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = true;

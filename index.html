@@ -1,30 +1,53 @@
 <head>
     <title>OSU Online CS</title>
-    <link rel="stylesheet" href="dist/dragula.min.css" type="text/css">
-    <link rel="stylesheet" href="dist/vex.css" />
-    <link rel="stylesheet" href="dist/vex-theme-wireframe.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel='stylesheet' href='dist/dragula.min.css' type='text/css'>
+    <link rel='stylesheet' href='dist/vex.css' />
+    <link rel='stylesheet' href='dist/vex-theme-wireframe.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+        integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
+    <link rel='stylesheet' href='style.css' type='text/css'>
 </head>
 
 <body>
-    <div class="sidebar collapsed text-center container" id="sidebar">
-        <label>
-            <input id=chk165 type="checkbox" onclick="toggle165()"> Use 165 over 161/162
-        </label>
-        <button onclick='alertUrl()'>Get Url of Current Schedule</button>
-        <button onclick='window.location.reload()'>Reset Schedule</button>
-        <button onclick='window.location.href="https://hschallh.github.io/cs-scheduler/"'>Clear Schedule</button>
-    </div>
-
-    <div class="py-1 text-center container-fluid" id="content">
-        <button onclick="$('#sidebar').toggleClass('collapsed')" class="hamburger">&#9776;</button>
-        <h1>OSU Online CS Scheduler</h1>
-        <div class="row">
-            <div class='col-md'>
+    <div class='py-1 text-center container-fluid' id='content'>
+        <h2 class='text-center mb-3'>OSU Online CS Scheduler</h2>
+        <div class='row'>
+            <div class='col-lg-3 mb-3' id='sidebar'>
+                <div class="container">
+                    <h4 class='text-center mb-3'>Options</h4>
+                    <label>
+                        <input id='chk165' class='mb-3' type='checkbox' onclick='toggle165()'> Use 165 over 161
+                    </label>
+                    <button class='btn btn-primary mb-3' onclick='alertUrl()'>Current Schedule</button>
+                    <button class='btn btn-primary mb-3' onclick='window.location.reload()'>Reset Schedule</button>
+                    <button class='btn btn-primary mb-3' onclick='window.location.href="https://hschallh.github.io/cs-scheduler/"'>Clear Schedule</button>
+                    <h4 class='text-center mb-3'>Key</h4>
+                    <div class='list-group'>
+                        <div class='list-group list-group-item example'>
+                            <strong>Valid Spot</strong>
+                            <div class="list-group-item example satisfied">
+                                Placeable Class
+                            </div>
+                            <div class="list-group-item example unsatisfied">
+                                Prereqs Unmet
+                            </div>
+                            <div class="list-group-item example elective unsatisfied">
+                                Elective
+                            </div>
+                            <div class="list-group-item example prereq">
+                                Prereqisite
+                            </div>
+                        </div>
+                        <div class='list-group-item example invalid'>
+                            <strong>Invalid Spot</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-lg-4 mb-3'>
                 <div id='courses' class='container dragula-container list-group'></div>
             </div>
-            <div class='col-md'>
+            <div class='col-lg-5 mb-3'>
                 <div id='quarters' class='container list-group'>
                     <div class='list-group-item list-group-horizontal'>
                         <div class='list-group-item dragula-container' id='prevButton' onclick='addPrev()'>+</div>
@@ -32,20 +55,23 @@
                     </div>
                     <div id='Q0' class='dragula-container list-group-item'></div>
                     <div class='list-group-item list-group-horizontal'>
-                        <div class='list-group-item dragula-container' id="nextButton" onclick='addNext()'>+</div>
+                        <div class='list-group-item dragula-container' id='nextButton' onclick='addNext()'>+</div>
                         <div class='list-group-item' id='removeNextButton' onclick='removeNext()'>-</div>
                     </div>
                 </div>
             </div>
         </div>
         <script src='dist/dragula.min.js'></script>
-        <script src="dist/vex.combined.min.js"></script>
+        <script src='dist/vex.combined.min.js'></script>
         <script>
             vex.defaultOptions.className = 'vex-theme-wireframe'
         </script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo'
+            crossorigin='anonymous'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'
+            crossorigin='anonymous'></script>
+        <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'
+            crossorigin='anonymous'></script>
         <script src='script.js'></script>
     </div>
 </body>

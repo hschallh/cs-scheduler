@@ -95,10 +95,10 @@ body {
 #quarters {
     overflow-y: scroll;
     vertical-align: top;
-    max-height: 85%;
+    max-height: 90%;
 }
 
-#quarters,
+/* #quarters,
 .col-md:last-child {
     padding-left: 0px;
     padding-right: 15px;
@@ -108,7 +108,7 @@ body {
 .col-md:first-child {
     padding-right: 0px;
     padding-left: 15px;
-}
+} */
 
 /* replicate :first-child styling when the real first child is hidden */
 .list-group-item[style*='display: none']+.list-group-item:not([style*='display: none']) {
@@ -123,67 +123,60 @@ body {
 }
 
 /* all drag and droppable divs */
-.dragula-container>div {
+.dragula-container>div,
+.example {
     font-weight: normal;
     cursor: move;
     cursor: grab;
-    background: #dc9e85;
     width: 95%;
     min-width: 95%;
 }
 
+.btn {
+    width: 95%;
+    white-space: normal;
+}
+
+.dragula-container>div,
+.example.satisfied {
+    background: #dc9e85;
+}
+
+.satisfied {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+
 /* Electives */
-.dragula-container>div.elective {
+.dragula-container>div.elective,
+.elective {
     color: #666;
     font-style: italic;
 }
 
 /* Cannot be picked up or dropped into */
-.dragula-container>div.unsatisfied{
+.dragula-container>div.unsatisfied,
+.unsatisfied {
     background: #fff;
     cursor: default;
 }
+
+.dragula-container>div.invalid,
 .invalid {
     background-color: rgba(0, 0, 0, .1);
 }
 
 /* The hovered course's prereq */
-.dragula-container>div.prereq {
+.dragula-container>div.prereq,
+.prereq {
     background: #e64100;
     color: #fff;
 }
 
 /* OPTIONS BAR */
-.hamburger {
-    background: none;
-    color: inherit;
-    font-size: 20px;
-    border: none;
-    font-weight: bold;
-    text-align: right;
-    float: right;
-}
-
-.sidebar {
-    margin: 0;
-    background: #dc9e85;
-    transition: all .1s;
-    max-height: 1000px;
-    flex: 0 1 auto;
-}
-
-.sidebar.collapsed {
-    max-height: 0;
-    overflow: hidden;
-}
-
-.sidebar button {
-    background-color: rgba(0, 0, 0, 0.15);
-    color: inherit;
-    font: inherit;
-    margin: 10px;
-    border: 1px solid black;
-    cursor: pointer;
+#sidebar {
+    /* background-color: rgba(0, 0, 0, .1); */
 }
 
 /* DRAGULA */
