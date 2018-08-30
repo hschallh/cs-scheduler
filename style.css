@@ -98,18 +98,6 @@ body {
     max-height: 90%;
 }
 
-/* #quarters,
-.col-md:last-child {
-    padding-left: 0px;
-    padding-right: 15px;
-}
-
-#courses,
-.col-md:first-child {
-    padding-right: 0px;
-    padding-left: 15px;
-} */
-
 /* replicate :first-child styling when the real first child is hidden */
 .list-group-item[style*='display: none']+.list-group-item:not([style*='display: none']) {
     border-top-left-radius: .25rem;
