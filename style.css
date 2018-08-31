@@ -28,7 +28,7 @@ body {
 }
 
 .row {
-    flex: 1 1 auto;
+    /* flex: 1 1 auto; */
 }
 
 .list-group-item {
@@ -36,7 +36,6 @@ body {
     margin-right: auto;
     margin-left: auto;
 }
-
 
 /* + / - SEMESTER BUTTONS */
 #quarters div[id$='Button'] {
@@ -134,7 +133,6 @@ body {
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
 }
-
 
 /* Electives */
 .dragula-container>div.elective,
