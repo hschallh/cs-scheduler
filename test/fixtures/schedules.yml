@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  is_public: false
+  use_165: false
+  start_quarter: 2018-09-04
+  representation: MyString
+  user: one
+
+two:
+  name: MyString
+  is_public: false
+  use_165: false
+  start_quarter: 2018-09-04
+  representation: MyString
+  user: two
