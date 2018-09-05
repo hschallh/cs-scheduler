@@ -27,9 +27,7 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      <%= render 'shared/errors', object: @user %>
-      <%= yield %>
-    </div>
+    <%= render 'shared/errors', object: @user %>
+    <%= yield %>
   </body>
 </html>

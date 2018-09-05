@@ -1,3 +1,7 @@
 <div>
   <h1><%= current_user.name %>'s Schedules</h1>
+  <% @user.schedules.each do |schedule| %>
+    <%= link_to schedule[:name], schedule_path(schedule) %>
+  <% end %>
+  <%= link_to New Schedule, new_schedule_path, class="btn btn-primary" %>
 </div>
