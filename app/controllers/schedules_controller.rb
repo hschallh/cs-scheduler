@@ -1,6 +1,11 @@
 class SchedulesController < ApplicationController
     before_action :authorize, only: [:create, :destroy]
 
+    def new
+        @user = current_user
+        @schedule = Schedule.new
+    end
+
     def show
     end
 
@@ -9,7 +14,7 @@ class SchedulesController < ApplicationController
         @schedule = @user.schedules.create(schedule_params)
         if @schedule.save
             flash[:success] = "Schedule Saved!"
-            redirect_to schedule_path(@schedule)
+            render :show
         else
             render :new
         end

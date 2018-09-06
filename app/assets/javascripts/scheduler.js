@@ -413,16 +413,17 @@ function toggle165() {
 }
 
 // Display an alert with a link to the current schedule
-function alertUrl() {
-	var qtr = oldestQuarter.getTime();
-	var use_165 = cs165;
-	var str;
+function setup_form() {
+	$("#start_quarter").val(oldestQuarter.getTime());
+	$("#use_165").val(cs165);
+	var str = "";
 	$("#quarters>div:not(.list-group-horizontal)").each(function() {
 			str += "-";
 			$(this).children().each(function() {
 					str += "+" + this.id;
 			});
 	});
+	$("#representation").val(str);
 }
 
 // Set up a schedule based on the current link

@@ -8,9 +8,9 @@
                     <label>
                         <input id='chk165' class='mb-3' type='checkbox' onclick='toggle165()'> Use 165 over 161
                     </label>
-                    <button class='btn btn-primary mb-3' onclick='alertUrl()'>Current Schedule</button>
                     <button class='btn btn-primary mb-3' onclick='window.location.reload()'>Reset Schedule</button>
-                    <button class='btn btn-primary mb-3' onclick='window.location.href="https://hschallh.github.io/cs-scheduler/"'>Clear Schedule</button>
+                    <button class='btn btn-primary mb-3' onclick='clear_schedule()'>Clear Schedule</button>
+                    <button class='btn btn-success mb-3' onclick='setup_form()' data-toggle="modal" data-target="#form_modal">Save Schedule</button>
                 </div>
                 <div class="col-6 col-md-12">
                     <h4 class='text-center mb-3'>Key</h4>
@@ -54,5 +54,21 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="form_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <%= form_for @schedule, html: {class: "form-signin needs-validation", novalidate: true } do |f|%>
+            <h1 class="text-center h3 mb-3 font-weight-normal">Save Schedule</h1>
+            <%= f.text_field :name, class: "form-control", placeholder: "Schedule Name", required: true, autofocus: true %>
+            <%= f.radio_button :is_public, "false", :checked => true , class: 'inline mr-3 mb-2' %>     Keep Private<br>
+            <%= f.radio_button :is_public, "true", class: 'inline mr-3 mb-3' %>    Make Public
+            <%= f.hidden_field :representation, id:"representation" %>
+            <%= f.hidden_field :use_165, id:"use_165" %>
+            <%= f.hidden_field :start_quarter, id:"start_quarter" %>
+            <%= f.submit 'Save', class: "btn btn-lg btn-primary btn-block bg-beaver" %>
+      <% end %>
+    </div>
+  </div>
 </div>
 <%= javascript_include_tag 'scheduler' %>

@@ -3,5 +3,5 @@
   <% @user.schedules.each do |schedule| %>
     <%= link_to schedule[:name], schedule_path(schedule) %>
   <% end %>
-  <%= link_to New Schedule, new_schedule_path, class="btn btn-primary" %>
+  <%= link_to 'New Schedule', new_schedule_path, class: "btn btn-primary" %>
 </div>
