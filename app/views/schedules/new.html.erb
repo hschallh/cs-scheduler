@@ -1,0 +1,58 @@
+<div class='py-1 text-center container-fluid' id='content'>
+    <h2 class='text-center mb-3'>OSU Online CS Scheduler</h2>
+    <div class='row no-gutters'>
+        <div class='col-md-3 mb-3' align="center" id='sidebar'>
+            <div class="row container justify-content-between no-gutters">
+                <div class="col-6 col-md-12">
+                    <h4 class='text-center mb-3'>Options</h4>
+                    <label>
+                        <input id='chk165' class='mb-3' type='checkbox' onclick='toggle165()'> Use 165 over 161
+                    </label>
+                    <button class='btn btn-primary mb-3' onclick='alertUrl()'>Current Schedule</button>
+                    <button class='btn btn-primary mb-3' onclick='window.location.reload()'>Reset Schedule</button>
+                    <button class='btn btn-primary mb-3' onclick='window.location.href="https://hschallh.github.io/cs-scheduler/"'>Clear Schedule</button>
+                </div>
+                <div class="col-6 col-md-12">
+                    <h4 class='text-center mb-3'>Key</h4>
+                    <div class='list-group'>
+                        <div class='list-group list-group-item example'>
+                            <strong>Valid Spot</strong>
+                            <div class="list-group-item example satisfied">
+                                Placeable Class
+                            </div>
+                            <div class="list-group-item example unsatisfied">
+                                Prereqs Unmet
+                            </div>
+                            <div class="list-group-item example elective unsatisfied">
+                                Elective
+                            </div>
+                            <div class="list-group-item example prereq">
+                                Prereqisite
+                            </div>
+                        </div>
+                        <div class='list-group-item example invalid'>
+                            <strong>Invalid Spot</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-4 col-sm-6 mb-3'>
+            <div id='courses' class='container dragula-container list-group'></div>
+        </div>
+        <div class='col-md-5 col-sm-6 mb-3'>
+            <div id='quarters' class='container list-group'>
+                <div class='list-group-item list-group-horizontal'>
+                    <div class='list-group-item dragula-container' id='prevButton' onclick='addPrev()'>+</div>
+                    <div class='list-group-item' id='removePrevButton' onclick='removePrev()'>-</div>
+                </div>
+                <div id='Q0' class='dragula-container list-group-item'></div>
+                <div class='list-group-item list-group-horizontal'>
+                    <div class='list-group-item dragula-container' id='nextButton' onclick='addNext()'>+</div>
+                    <div class='list-group-item' id='removeNextButton' onclick='removeNext()'>-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%= javascript_include_tag 'scheduler' %>

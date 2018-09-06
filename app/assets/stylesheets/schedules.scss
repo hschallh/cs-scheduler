@@ -1,3 +1,192 @@
 // Place all the styles related to the Schedules controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/* SCROLLBAR */
+html {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+	display: block;
+	overflow: auto;
+	width: 5px;
+	height: 8px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+html,
+body {
+	height: 100%;
+}
+
+#content {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+}
+
+.list-group-item {
+	padding: .5rem .75rem;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* + / - SEMESTER BUTTONS */
+#quarters div[id$='Button'] {
+	cursor: pointer;
+}
+
+.list-group-horizontal {
+	display: flex;
+	flex-direction: row;
+	padding: 0px;
+	border: none;
+	min-height: 43px;
+}
+
+.list-group-horizontal .list-group-item:first-child {
+	border-right-width: 0;
+	width: 85%;
+}
+
+.list-group-horizontal .list-group-item:last-child {
+	border-right-width: 1px;
+	width: 15%;
+}
+
+.list-group-horizontal:first-child :first-child {
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: .25rem;
+}
+
+.list-group-horizontal:first-child :last-child {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: .25rem;
+}
+
+.list-group-horizontal:last-child :first-child {
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: .25rem;
+	margin-bottom: 0;
+}
+
+.list-group-horizontal:last-child :last-child {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: .25rem;
+}
+
+/* COURSE AND QUARTER CONTAINERS */
+#courses,
+#quarters {
+	overflow-y: scroll;
+	vertical-align: top;
+	max-height: 90%;
+}
+
+/* replicate :first-child styling when the real first child is hidden */
+.list-group-item[style*='display: none']+.list-group-item:not([style*='display: none']) {
+	border-top-left-radius: .25rem;
+	border-top-right-radius: .25rem;
+}
+
+/* All divs in the quarter container */
+#quarters>* {
+	width: 95%;
+	font-weight: bold;
+}
+
+/* all drag and droppable divs */
+.dragula-container>div,
+.example {
+	font-weight: normal;
+	cursor: move;
+	cursor: grab;
+	width: 95%;
+	min-width: 95%;
+}
+
+.btn {
+	width: 95%;
+	white-space: normal;
+}
+
+.dragula-container>div,
+.example.satisfied {
+	background: #dc9e85;
+}
+
+.satisfied {
+	border-top-left-radius: .25rem;
+	border-top-right-radius: .25rem;
+}
+
+/* Electives */
+.dragula-container>div.elective,
+.elective {
+	color: #666;
+	font-style: italic;
+}
+
+/* Cannot be picked up or dropped into */
+.dragula-container>div.unsatisfied,
+.unsatisfied {
+	background: #fff;
+	cursor: default;
+}
+
+.dragula-container>div.invalid,
+.invalid {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+/* The hovered course's prereq */
+.dragula-container>div.prereq,
+.prereq {
+	background: #e64100;
+	color: #fff;
+}
+
+/* OPTIONS BAR */
+#sidebar {
+	/* background-color: rgba(0, 0, 0, .1); */
+}
+
+/* DRAGULA */
+.gu-mirror {
+	position: fixed !important;
+	margin: 0 !important;
+	z-index: 9999 !important;
+	opacity: 0.8;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	filter: alpha(opacity=80);
+}
+
+.gu-hide {
+	display: none !important;
+}
+
+.gu-unselectable {
+	-webkit-user-select: none !important;
+	-moz-user-select: none !important;
+	-ms-user-select: none !important;
+	user-select: none !important;
+}
+
+.gu-transit {
+	opacity: 0.2;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	filter: alpha(opacity=20);
+}
