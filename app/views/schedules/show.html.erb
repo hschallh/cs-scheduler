@@ -1,3 +1,7 @@
-<div>
-  <h1>Schedule <%= @schedule %></h1>
-</div>
+<%= render "schedule" %>
+<script type="text/javascript">
+$(function() { 
+  setup();
+  populate_schedule("<%= @schedule.representation %>", <%= @schedule.start_quarter %>, <%= @schedule.use_165 %>); 
+});
+</script>

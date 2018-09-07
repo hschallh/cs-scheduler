@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2018_09_04_221942) do
     t.string "name"
     t.boolean "is_public"
     t.boolean "use_165"
-    t.date "start_quarter"
+    t.bigint "start_quarter"
     t.string "representation"
     t.bigint "user_id"
     t.datetime "created_at", null: false

@@ -7,6 +7,8 @@ class SchedulesController < ApplicationController
     end
 
     def show
+        @user = current_user
+        @schedule = @user.schedules.find(params[:id])
     end
 
 	def create
@@ -14,14 +16,14 @@ class SchedulesController < ApplicationController
         @schedule = @user.schedules.create(schedule_params)
         if @schedule.save
             flash[:success] = "Schedule Saved!"
-            render :show
+            redirect_to(@schedule)
         else
             render :new
         end
     end
 
     def destroy
-        @user = User.find(params[:user_id])
+        @user = current_user
         @schedule = @user.schedules.find(params[:id])
         @schedule.destroy
         redirect_to user_path(@user)

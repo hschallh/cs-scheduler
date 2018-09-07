@@ -175,7 +175,7 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
 });
 
 // jquery after page loads
-$(function() {
+function setup() {
 	// Build html elements for each of the courses
 	for (var id in courses) {
 			var html = "<div id='" + id + "' class='list-group-item'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
@@ -203,11 +203,7 @@ $(function() {
 
 	// register all of the places courses can be dragged to with the drag/drop handler
 	for (var i = 0; i < $(".dragula-container").length; dragAndDrop.containers.push($(".dragula-container")[i++]));
-
-	// Label the initial quarter container with the current quarter
-	parseLink();
-	$("#Q0").prepend(getQuarterName(today));
-});
+};
 
 // Disallow drops into a container
 function removeContainer(id) {
@@ -427,27 +423,28 @@ function setup_form() {
 }
 
 // Set up a schedule based on the current link
-function parseLink() {
-	var params = new URLSearchParams(window.location.search);
-	if (params.get("cs165")) {
-			$("#chk165").prop('checked', true);
-			toggle165();
-	}
-	today = params.get("st") ? new Date(+params.get("st")) : new Date();
-	oldestQuarter = newestQuarter = today;
+function populate_schedule(data, start_quarter, use_165) {
 
-	var data = params.get("data");
-	if (data) {
-			var quarters = data.split('-');
-			quarters.shift();
-			quarters.forEach(function(quarter, i) {
-					var quarterId = i ? addNext() : "Q0";
-					var classes = quarter.split(" ");
-					classes.shift();
-					classes.forEach(function(classId) {
-							$("#" + quarterId).append($("#" + classId));
-					});
-			});
-			updatePrereqs($("#courses>:first-child"), $("#courses"));
-	}
+    var today = start_quarter ? new Date(+start_quarter) : new Date();
+    oldestQuarter = newestQuarter = today;
+    $("#Q0").prepend(getQuarterName(today));
+
+    if (use_165) {
+        $("#chk165").prop('checked', true);
+        toggle165();
+    }
+
+    if (data) {
+        var quarters = data.split('-');
+        quarters.shift();
+        quarters.forEach(function(quarter, i) {
+            var quarterId = i ? addNext() : "Q0";
+            var classes = quarter.split("+");
+            classes.shift();
+            classes.forEach(function(classId) {
+                $("#" + quarterId).append($("#" + classId));
+            });
+        });
+        updatePrereqs($("#courses>:first-child"), $("#courses"));
+    }
 }

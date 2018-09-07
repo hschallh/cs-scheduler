@@ -1,7 +1,9 @@
-<div>
-  <h1><%= current_user.name %>'s Schedules</h1>
+<div class="col-12 col-md-6 text-center">
+  <h2><%= current_user.name %>'s Schedules</h2>
+  <ul class="list-group">
   <% @user.schedules.each do |schedule| %>
-    <%= link_to schedule[:name], schedule_path(schedule) %>
+    <%= link_to schedule[:name], schedule_path(schedule), class: "list-group-item btn btn-light" %>
   <% end %>
-  <%= link_to 'New Schedule', new_schedule_path, class: "btn btn-primary" %>
+  <%= link_to 'New Schedule', new_schedule_path, class: "list-group-item btn btn-primary bg-beaver" %>
+  </ul>
 </div>
