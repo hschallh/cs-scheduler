@@ -1,7 +1,9 @@
 <%= render "schedule" %>
 <script type="text/javascript">
-$(function() { 
-  setup();
-  populate_schedule("<%= @schedule.representation %>", <%= @schedule.start_quarter %>, <%= @schedule.use_165 %>); 
+$(document).on('turbolinks:load', function() {
+    if (!from_cache) {
+        setup();
+        populate_schedule("<%= @schedule.representation %>", <%= @schedule.start_quarter %>, <%= @schedule.use_165 %>); 
+    }
 });
 </script>
