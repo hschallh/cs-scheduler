@@ -19,7 +19,7 @@
         <div class="navbar-nav ml-auto">
           <% if @current_user %>
             <%= link_to @current_user[:name], profile_path, class: "nav-item nav-link" %>
-            <%= link_to 'Log Out', logout_path, method: :delete, class: "nav-item nav-link" %>
+            <%= link_to 'Logout', logout_path, method: :delete, class: "nav-item nav-link" %>
           <% else %>
             <%= link_to 'Login', login_path, class: "nav-item nav-link" %>
             <%= link_to 'Register', register_path, class: "nav-item nav-link" %>

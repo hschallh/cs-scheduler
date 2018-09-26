@@ -9,6 +9,7 @@ class SchedulesController < ApplicationController
     def show
         @user = current_user
         @schedule = @user.schedules.find(params[:id])
+        puts @schedule.inspect
     end
 
 	def create
