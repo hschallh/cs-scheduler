@@ -8,9 +8,10 @@
                     <label>
                         <input id='chk165' class='mb-3' type='checkbox' onclick='toggle165()'> Use 165 over 161
                     </label>
-                    <button class='btn btn-primary mb-3' onclick='window.location.reload()'>Reset Schedule</button>
                     <button class='btn btn-primary mb-3' onclick='clear_schedule()'>Clear Schedule</button>
+                    <button class='btn btn-info mb-3' onclick='window.location.reload()'>Reload Schedule</button>
                     <button class='btn btn-success mb-3' id="save_button" onclick='setup_form()' data-toggle="modal" data-target="#form_modal">Save Schedule</button>
+                    <%= link_to 'Delete Schedule',  @schedule,  method: :delete, class:'btn btn-warning mb-3', data: { confirm: 'Are you sure you want to delete this schedule?' } %>
                 </div>
                 <div class="col-6 col-md-12">
                     <h4 class='text-center mb-3'>Key</h4>

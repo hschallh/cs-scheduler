@@ -27,7 +27,7 @@ class SchedulesController < ApplicationController
         @user = current_user
         @schedule = @user.schedules.find(params[:id])
         @schedule.destroy
-        redirect_to user_path(@user)
+        redirect_to users_path(@user)
     end
 
     private
