@@ -16,8 +16,10 @@
                     <% if @schedule and @schedule.name %>
                         <button class='btn btn-info mb-3' onclick='window.location.reload()'>Reload Schedule</button>
                     <% end %>
-                    <button class='btn btn-success mb-3' id="save_button" onclick='setup_form()' data-toggle="modal" data-target="#form_modal"><%= @schedule and @schedule.name ? 'Update' : 'Save' %> Schedule</button>
-                    <% if @schedule and @schedule.name %>
+                    <% if @editable %>
+                        <button class='btn btn-success mb-3' id="save_button" onclick='setup_form()' data-toggle="modal" data-target="#form_modal"><%= @schedule and @schedule.name ? 'Update' : 'Save' %> Schedule</button>
+                    <% end %>
+                    <% if @schedule and @schedule.name and @editable %>
                         <%= link_to 'Delete Schedule',  @schedule,  method: :delete, class:'btn btn-warning mb-3', data: { confirm: 'Are you sure you want to delete this schedule?' } %>
                     <% end %>
                 </div>

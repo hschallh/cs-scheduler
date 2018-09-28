@@ -4,11 +4,27 @@ class SchedulesController < ApplicationController
     def new
         @user = current_user
         @schedule = Schedule.new
+        @editable = true
     end
 
     def show
         @user = current_user
-        @schedule = @user.schedules.find(params[:id])
+        @schedule = Schedule.find_by_id(params[:id])
+        @editable = true
+        if @schedule.nil?
+            flash.now[:warning] = "Schedule does not exist"
+            @schedule = Schedule.new
+            redirect_to new_schedule_path
+        elsif !@schedule.is_public and (!@user or @user.id != @schedule.user_id)
+            flash.now[:warning] = "This schedule is not public"
+            @schedule = Schedule.new
+            redirect_to new_schedule_path
+        elsif @user and @user.id == @schedule.user_id
+            render :show
+        else
+            @editable = false
+            render :show
+        end
     end
 
 	def create
