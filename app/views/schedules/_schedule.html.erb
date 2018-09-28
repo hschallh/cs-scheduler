@@ -1,5 +1,9 @@
 <div class='py-1 text-center container-fluid' id='content'>
-    <h2 class='text-center mb-3'>OSU Online CS Scheduler</h2>
+    <% if @schedule and @schedule.name %>
+        <h2 class='text-center mb-3'><%= @schedule.name %></h2>
+    <% else %>
+        <h2 class='text-center mb-3'>New Schedule</h2>
+    <% end %>
     <div class='row no-gutters'>
         <div class='col-md-3 mb-3' align="center" id='sidebar'>
             <div class="row container justify-content-between no-gutters">
@@ -9,9 +13,13 @@
                         <input id='chk165' class='mb-3' type='checkbox' onclick='toggle165()'> Use 165 over 161
                     </label>
                     <button class='btn btn-primary mb-3' onclick='clear_schedule()'>Clear Schedule</button>
-                    <button class='btn btn-info mb-3' onclick='window.location.reload()'>Reload Schedule</button>
-                    <button class='btn btn-success mb-3' id="save_button" onclick='setup_form()' data-toggle="modal" data-target="#form_modal">Save Schedule</button>
-                    <%= link_to 'Delete Schedule',  @schedule,  method: :delete, class:'btn btn-warning mb-3', data: { confirm: 'Are you sure you want to delete this schedule?' } %>
+                    <% if @schedule and @schedule.name %>
+                        <button class='btn btn-info mb-3' onclick='window.location.reload()'>Reload Schedule</button>
+                    <% end %>
+                    <button class='btn btn-success mb-3' id="save_button" onclick='setup_form()' data-toggle="modal" data-target="#form_modal"><%= @schedule and @schedule.name ? 'Update' : 'Save' %> Schedule</button>
+                    <% if @schedule and @schedule.name %>
+                        <%= link_to 'Delete Schedule',  @schedule,  method: :delete, class:'btn btn-warning mb-3', data: { confirm: 'Are you sure you want to delete this schedule?' } %>
+                    <% end %>
                 </div>
                 <div class="col-6 col-md-12">
                     <h4 class='text-center mb-3'>Key</h4>
@@ -507,7 +515,7 @@ function populate_schedule(data, start_quarter, use_165) {
     oldestQuarter = newestQuarter = today;
     $("#Q0").prepend(getQuarterName(today));
 
-    if (use_165) {
+    if (use_165 == "true") {
         $("#chk165").prop('checked', true);
         toggle165();
     }

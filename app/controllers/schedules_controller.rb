@@ -9,16 +9,16 @@ class SchedulesController < ApplicationController
     def show
         @user = current_user
         @schedule = @user.schedules.find(params[:id])
-        puts @schedule.inspect
     end
 
 	def create
         @user = current_user
         @schedule = @user.schedules.create(schedule_params)
         if @schedule.save
-            flash[:success] = "Schedule Saved!"
+            flash[:success] = "Schedule saved"
             redirect_to(@schedule)
         else
+            flash.now[:warning] = "Schedule could not be saved"
             render :new
         end
     end
@@ -27,7 +27,8 @@ class SchedulesController < ApplicationController
         @user = current_user
         @schedule = @user.schedules.find(params[:id])
         @schedule.destroy
-        redirect_to users_path(@user)
+        flash[:success] = "Schedule deleted"
+        redirect_to profile_path
     end
 
     private
