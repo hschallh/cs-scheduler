@@ -1,9 +1,1 @@
 <%= render "schedule" %>
-<script type="text/javascript">
-$(document).on('turbolinks:load', function() {
-	if (!from_cache) {
-		setup();
-        populate_schedule("", undefined, false);
-    }
-});
-</script>

@@ -526,4 +526,9 @@ function populate_schedule(data, start_quarter, use_165) {
         updatePrereqs($("#courses>:first-child"), $("#courses"));
     }
 }
+
+
+setup();
+populate_schedule("<%= @schedule.representation %>", "<%= @schedule.start_quarter %>", "<%= @schedule.use_165 %>"); 
+
 </script>
