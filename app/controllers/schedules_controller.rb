@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-    before_action :authorize, only: [:create, :destroy]
+    before_action :authorize, only: [:create]
 
     def new
         @user = current_user
@@ -43,7 +43,11 @@ class SchedulesController < ApplicationController
         @user = current_user
         @schedule = Schedule.find_by_id(params[:id])
         @editable = true
-        if @user and @user.id == @schedule.user_id
+        if @schedule.nil?
+            flash.now[:warning] = "Schedule does not exist"
+            @schedule = Schedule.new
+            redirect_to new_schedule_path
+        elsif @user and @user.id == @schedule.user_id
             if @schedule.update(schedule_params)
                 flash[:success] = "Schedule updated"
                 redirect_to(@schedule)
@@ -53,16 +57,36 @@ class SchedulesController < ApplicationController
             end
         else
             flash[:warning] = "Cannot update a schedule that is not yours"
-            redirect_to(@schedule)
+            if @schedule.is_public
+                redirect_to(@schedule)
+            else 
+                @schedule = Schedule.new
+                redirect_to new_schedule_path
+            end
         end
     end
 
     def destroy
         @user = current_user
-        @schedule = @user.schedules.find(params[:id])
-        @schedule.destroy
-        flash[:success] = "Schedule deleted"
-        redirect_to profile_path
+        @schedule = Schedule.find_by_id(params[:id])
+        @editable = true
+        if @schedule.nil?
+            flash.now[:warning] = "Schedule does not exist"
+            @schedule = Schedule.new
+            redirect_to new_schedule_path
+        elsif @user and @user.id == @schedule.user_id
+            @schedule.destroy
+            flash[:success] = "Schedule deleted"
+            redirect_to profile_path
+        else
+            flash[:warning] = "Cannot delete a schedule that is not yours"
+            if @schedule.is_public
+                redirect_to(@schedule)
+            else
+                @schedule = Schedule.new
+                redirect_to new_schedule_path
+            end
+        end
     end
 
     private
