@@ -39,6 +39,24 @@ class SchedulesController < ApplicationController
         end
     end
 
+    def update
+        @user = current_user
+        @schedule = Schedule.find_by_id(params[:id])
+        @editable = true
+        if @user and @user.id == @schedule.user_id
+            if @schedule.update(schedule_params)
+                flash[:success] = "Schedule updated"
+                redirect_to(@schedule)
+            else
+                flash[:warning] = "Schedule could not be updated"
+                redirect_to(@schedule)
+            end
+        else
+            flash[:warning] = "Cannot update a schedule that is not yours"
+            redirect_to(@schedule)
+        end
+    end
+
     def destroy
         @user = current_user
         @schedule = @user.schedules.find(params[:id])
