@@ -38,7 +38,7 @@
                                 Elective
                             </div>
                             <div class="list-group-item example prereq">
-                                Prereqisite
+                                Prerequisite
                             </div>
                         </div>
                         <div class='list-group-item example invalid'>
@@ -86,7 +86,8 @@
 // Classes with their codes, names, prereqs, and whether or not they are an elective
 var courses = {
 	CS165: {
-			name: "Introduction to Computer Science I/II"
+			name: "Introduction to Computer Science I/II",
+			restrictedTo: ["Fall", "Winter", "Spring"]
 	},
 	CS161: {
 			name: "Introduction to Computer Science I"
@@ -158,7 +159,8 @@ var courses = {
 	CS464: {
 			name: "Open Source Software Development",
 			elective: true,
-			prereqs: ["CS361"]
+			prereqs: ["CS361"],
+			restrictedTo: ["Summer", "Fall", "Spring"]
 	},
 	CS492: {
 			name: "Mobile Software Development",
@@ -494,6 +496,14 @@ function toggle165() {
 			updatePrereqs($("#CS161"), $("#CS165").parent());
 			cs165 = true;
 	}
+}
+
+function clear_schedule() {
+	$("#courses>:first-child").before($("#CS225"));
+	$("#courses>:first-child").before($("#CS165"));
+	$("#courses>:first-child").before($("#CS161"));
+
+	updatePrereqs($("#CS225"), $("#CS165").parent());
 }
 
 // Display an alert with a link to the current schedule
