@@ -1,9 +1,19 @@
-<div class="col-12 col-md-6 text-center">
+<div class="col-12 col-md-6">
   <h2><%= current_user.name %>'s Schedules</h2>
   <ul class="list-group">
   <% @user.schedules.each do |schedule| %>
-    <%= link_to schedule[:name], schedule_path(schedule), class: "list-group-item btn btn-light" %>
+    <%= link_to schedule_path(schedule), class: "list-group-item d-flex justify-content-between lh-condensed" do %>
+      <div>
+        <h5 class="my-0"><%= schedule[:name] %></h6>
+        <div class='<%= if schedule[:is_public] then "" else "text-muted" end %> small'><%= if schedule[:is_public] then "Public" else "Private" end %></div>
+        <div class="text-muted small"><%= schedule[:representation].count("-") / 4.0 %> years</div>
+      </div>
+      <div>
+        <div class="text-muted small"><%= schedule[:created_at].strftime("Created on %b %d, %Y") %></div>
+        <div class="text-muted small"><%= schedule[:updated_at].strftime("Updated on %b %d, %Y") %></div>
+      </div>
+      <% end %>
   <% end %>
-  <%= link_to 'New Schedule', new_schedule_path, class: "list-group-item btn btn-primary bg-beaver" %>
+  <%= link_to 'New Schedule', new_schedule_path, class: "text-center list-group-item btn-primary bg-beaver" %>
   </ul>
 </div>
