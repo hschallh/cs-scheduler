@@ -1,9 +1,10 @@
-# README
+# Oregon State Online CS Scheduler
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Find me hosted at http://cs-scheduler.herokuapp.com/
 
-Things you may want to cover:
+README in progress.
+
+Things to be covered:
 
 * Ruby version
 
