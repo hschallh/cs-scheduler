@@ -12,11 +12,11 @@ class SchedulesController < ApplicationController
         @schedule = Schedule.find_by_id(params[:id])
         @editable = true
         if @schedule.nil?
-            flash.now[:warning] = "Schedule does not exist"
+            flash[:warning] = "Schedule does not exist"
             @schedule = Schedule.new
             redirect_to new_schedule_path
         elsif !@schedule.is_public and (!@user or @user.id != @schedule.user_id)
-            flash.now[:warning] = "This schedule is not public"
+            flash[:warning] = "This schedule is not public"
             @schedule = Schedule.new
             redirect_to new_schedule_path
         elsif @user and @user.id == @schedule.user_id
@@ -44,7 +44,7 @@ class SchedulesController < ApplicationController
         @schedule = Schedule.find_by_id(params[:id])
         @editable = true
         if @schedule.nil?
-            flash.now[:warning] = "Schedule does not exist"
+            flash[:warning] = "Schedule does not exist"
             @schedule = Schedule.new
             redirect_to new_schedule_path
         elsif @user and @user.id == @schedule.user_id
@@ -71,7 +71,7 @@ class SchedulesController < ApplicationController
         @schedule = Schedule.find_by_id(params[:id])
         @editable = true
         if @schedule.nil?
-            flash.now[:warning] = "Schedule does not exist"
+            flash[:warning] = "Schedule does not exist"
             @schedule = Schedule.new
             redirect_to new_schedule_path
         elsif @user and @user.id == @schedule.user_id
