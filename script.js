@@ -1,100 +1,100 @@
 // Classes with their codes, names, prereqs, and whether or not they are an elective
 var courses = {
-    CS165: {
-        name: "Introduction to Computer Science I/II"
-    },
-    CS161: {
-        name: "Introduction to Computer Science I"
-    },
-    CS162: {
-        name: "Introduction to Computer Science II",
-        prereqs: ["CS161"]
-    },
-    CS225: {
-        name: "Discrete Structures",
-    },
-    CS271: {
-        name: "Computer Architecture & Assembly Language",
-        prereqs: ["CS161"]
-    },
-    CS261: {
-        name: "Data Structures",
-        prereqs: ["CS162", "CS225"]
-    },
-    CS290: {
-        name: "Web Development",
-        prereqs: ["CS162"]
-    },
-    CS340: {
-        name: "Introduction to Databases",
-        prereqs: ["CS290"]
-    },
-    CS325: {
-        name: "Analysis of Algorithms",
-        prereqs: ["CS261", "CS225"]
-    },
-    CS344: {
-        name: "Operating Systems",
-        prereqs: ["CS261", "CS271"]
-    },
-    CS361: {
-        name: "Software Engineering I",
-        prereqs: ["CS261"]
-    },
-    CS362: {
-        name: "Software Engineering II",
-        prereqs: ["CS261"]
-    },
-    CS372: {
-        name: "Intro to Computer Networks",
-        prereqs: ["CS271", "CS261"]
-    },
-    CS467: {
-        name: "Software Projects",
-        prereqs: ["CS361", "CS344"]
-    },
-    CS352: {
-        name: "Introduction to Usability Engineering",
-        elective: true,
-        prereqs: ["CS161"]
-    },
-    CS475: {
-        name: "Parallel Programming",
-        elective: true,
-        prereqs: ["CS261"],
-        restrictedTo: ["Spring"]
-    },
-    CS373: {
-        name: "Defense Against the Dark Arts",
-        elective: true,
-        prereqs: ["CS340", "CS372", "CS344"],
-        restrictedTo: ["Winter", "Summer"]
-    },
-    CS464: {
-        name: "Open Source Software Development",
-        elective: true,
-        prereqs: ["CS361"]
-    },
-    CS492: {
-        name: "Mobile Software Development",
-        elective: true,
-        prereqs: ["CS344"],
-        restrictedTo: ["2019"],
-        note: "This class's availablility and prereqs are purely speculation"
-    },
-    CS493: {
-        name: "Cloud Software Development",
-        elective: true,
-        prereqs: ["CS290", "CS340", "CS372"],
-        restrictedTo: ["Fall - 2018", "Winter - 2019"],
-        note: "This class is only confirmed for the Fall 2018 and Winter 2019 semesters"
-    },
-    CS496: {
-        name: "Mobile and Cloud Software Development",
-        elective: true,
-        prereqs: ["CS344"],
-        note: "This class is no longer available as of the summer 2018"
-    }
+	CS165: {
+			name: "Introduction to Computer Science I/II",
+			restrictedTo: ["Fall", "Winter", "Spring"]
+	},
+	CS161: {
+			name: "Introduction to Computer Science I"
+	},
+	CS162: {
+			name: "Introduction to Computer Science II",
+			prereqs: ["CS161"]
+	},
+	CS225: {
+			name: "Discrete Structures",
+	},
+	CS271: {
+			name: "Computer Architecture & Assembly Language",
+			prereqs: ["CS161"]
+	},
+	CS261: {
+			name: "Data Structures",
+			prereqs: ["CS162", "CS225"]
+	},
+	CS290: {
+			name: "Web Development",
+			prereqs: ["CS162"]
+	},
+	CS340: {
+			name: "Introduction to Databases",
+			prereqs: ["CS290"]
+	},
+	CS325: {
+			name: "Analysis of Algorithms",
+			prereqs: ["CS261", "CS225"]
+	},
+	CS344: {
+			name: "Operating Systems",
+			prereqs: ["CS261", "CS271"]
+	},
+	CS361: {
+			name: "Software Engineering I",
+			prereqs: ["CS261"]
+	},
+	CS362: {
+			name: "Software Engineering II",
+			prereqs: ["CS261"]
+	},
+	CS372: {
+			name: "Intro to Computer Networks",
+			prereqs: ["CS271", "CS261"]
+	},
+	CS467: {
+			name: "Software Projects",
+			prereqs: ["CS361", "CS344"]
+	},
+	CS352: {
+			name: "Introduction to Usability Engineering",
+			elective: true,
+			prereqs: ["CS161"]
+	},
+	CS475: {
+			name: "Parallel Programming",
+			elective: true,
+			prereqs: ["CS261"],
+			restrictedTo: ["Spring"]
+	},
+	CS373: {
+			name: "Defense Against the Dark Arts",
+			elective: true,
+			prereqs: ["CS340", "CS372", "CS344"],
+			restrictedTo: ["Winter", "Summer"]
+	},
+	CS464: {
+			name: "Open Source Software Development",
+			elective: true,
+			prereqs: ["CS361"],
+			restrictedTo: ["Summer", "Fall", "Spring"]
+	},
+	CS492: {
+			name: "Mobile Software Development",
+			elective: true,
+			prereqs: ["CS344"],
+			note: "The availability of this class and prereqs are purely speculation. Should be offered starting 2019"
+	},
+	CS493: {
+			name: "Cloud Software Development",
+			elective: true,
+			prereqs: ["CS290", "CS340", "CS372"],
+			restrictedTo: ["Fall", "Spring"]
+	},
+	CS496: {
+			name: "Mobile and Cloud Software Development",
+			elective: true,
+			prereqs: ["CS344"],
+			note: "This class is no longer available as of the summer 2018"
+	}
 };
 
 var cs165 = false;
@@ -179,8 +179,9 @@ $(function() {
 
     // Build html elements for each of the courses
     for (var id in courses) {
-        var html = "<div id='" + id + "' class='list-group-item'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
-        $("#courses").append(html);
+        var title = (courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "") + (courses[id].note ? " Note: " +  courses[id].note : ""); 
+		var html = "<div id='" + id + "' class='list-group-item' title='" + title + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
+		$("#courses").append(html);
 
         if (courses[id].elective) {
             $("#" + id).addClass("elective");
