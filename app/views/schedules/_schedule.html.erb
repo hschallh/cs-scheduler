@@ -163,21 +163,20 @@ var courses = {
 			name: "Open Source Software Development",
 			elective: true,
 			prereqs: ["CS361"],
-			restrictedTo: ["Summer", "Fall", "Spring"]
+			restrictedTo: ["Summer", "Fall", "Spring"],
+			note: "This class's availability can be checked here: https://ecampus.oregonstate.edu/soc/ecatalog/ecourselist.htm?termcode=all&subject=CS"
 	},
 	CS492: {
 			name: "Mobile Software Development",
 			elective: true,
 			prereqs: ["CS344"],
-			restrictedTo: ["2019"],
-			note: "This class's availablility and prereqs are purely speculation"
+			note: "This class's availablility and prereqs are purely speculation. Should be offered starting 2019"
 	},
 	CS493: {
 			name: "Cloud Software Development",
 			elective: true,
 			prereqs: ["CS290", "CS340", "CS372"],
-			restrictedTo: ["Fall - 2018", "Winter - 2019"],
-			note: "This class is only confirmed for the Fall 2018 and Winter 2019 semesters"
+			restrictedTo: ["Fall", "Spring"]
 	},
 	CS496: {
 			name: "Mobile and Cloud Software Development",
@@ -269,7 +268,8 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
 function setup() { 
 	// Build html elements for each of the courses
 	for (var id in courses) {
-			var html = "<div id='" + id + "' class='list-group-item'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
+			var title = courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "" + courses[id].note ? " NOTES: " +  courses[id].notes : ""; 
+			var html = "<div id='" + id + "' class='list-group-item' title='" + title + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
 			$("#courses").append(html);
 
 			if (courses[id].elective) {
