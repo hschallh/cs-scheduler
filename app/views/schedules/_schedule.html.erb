@@ -268,7 +268,7 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
 function setup() { 
 	// Build html elements for each of the courses
 	for (var id in courses) {
-			var title = courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "" + courses[id].note ? " NOTES: " +  courses[id].notes : ""; 
+			var title = (courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "") + (courses[id].note ? " NOTES: " +  courses[id].note : ""); 
 			var html = "<div id='" + id + "' class='list-group-item' title='" + title + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
 			$("#courses").append(html);
 
