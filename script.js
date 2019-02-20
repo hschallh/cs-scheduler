@@ -171,13 +171,12 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
         console.log("bad");
     }
 
-    updatePrereqs(sibling, target);
+	updatePrereqs(sibling, target);
+	checkValidity();
 });
 
 // jquery after page loads
 $(function() {
-
-
     // Build html elements for each of the courses
     for (var id in courses) {
         var title = (courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "") + (courses[id].note ? " Note: " +  courses[id].note : ""); 
@@ -287,6 +286,36 @@ function updatePrereqs(sibling, target) {
     }
 }
 
+function checkValidity() {
+	var coreComplete = $("#courses>:not(.elective)").length <= (1 + cs165),
+		hasTwoElectives = $("#quarters>.dragula-container>.elective").length >= 2,
+		capstonLastQuarter = $("#quarters>.dragula-container>*").last().is("#quarters>.dragula-container>#CS467"),
+		quarterRestrictions = true;
+
+	$("#quarters>.dragula-container>*").each(function() {
+		var el = this;
+		if (courses[el.id].restrictedTo) {
+			var courseValid = false;
+			courses[el.id].restrictedTo.forEach(function(quarter) {
+				if ($(el).parent().text().startsWith(quarter)) {
+					courseValid = true;
+				}
+			});
+			if (!courseValid) {
+				quarterRestrictions = false;
+			}
+		}
+	});
+
+	if (coreComplete && hasTwoElectives && capstonLastQuarter && quarterRestrictions) {
+		$("#validText").addClass("valid");
+		$("#validText").text("Your schedule is valid.")
+	} else {
+		$("#validText").removeClass("valid");
+		$("#validText").text("Your schedule is not valid.")
+	}
+}
+
 // Get the name of a quarter as a two character string and year
 function getQuarterName(date) {
     return ["Winter", "Spring", "Summer", "Fall"][Math.floor(date.getMonth() / 3)] + " - " + date.getFullYear();
@@ -343,7 +372,9 @@ function removePrev() {
         $("#" + id).remove();
 
         firstQuarterNum++;
-        oldestQuarter = nextQuarter;
+		oldestQuarter = nextQuarter;
+
+		checkValidity();
     }
 }
 
@@ -368,7 +399,9 @@ function removeNext() {
 
         $("#" + id).remove();
 
-        newestQuarter = prevQuarter;
+		newestQuarter = prevQuarter;
+
+		checkValidity();
     }
 }
 
@@ -412,7 +445,8 @@ function toggle165() {
 
         updatePrereqs($("#CS161"), $("#CS165").parent());
         cs165 = true;
-    }
+	}
+	checkValidity();
 }
 
 // Display an alert with a link to the current schedule
@@ -455,6 +489,7 @@ function parseLink() {
                 $("#" + quarterId).append($("#" + classId));
             });
         });
-        updatePrereqs($("#courses>:first-child"), $("#courses"));
+		updatePrereqs($("#courses>:first-child"), $("#courses"));
+		checkValidity();
     }
 }
