@@ -52,7 +52,8 @@ var courses = {
 	},
 	CS467: {
 			name: "Software Projects",
-			prereqs: ["CS361", "CS344"]
+			prereqs: ["CS361", "CS344"],
+			note: "Must be taken in the final quarter"
 	},
 	CS352: {
 			name: "Introduction to Usability Engineering",
