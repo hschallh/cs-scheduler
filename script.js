@@ -274,7 +274,7 @@ function updatePrereqs(sibling, target) {
                         if ($("#" + id).hasClass('elective')) {
                             $(target).append($("#" + id));
                         } else {
-                            $(sibling).after($("#" + id));
+                            $("#" + prereq).after($("#" + id));
                         }
                     }
                 }
