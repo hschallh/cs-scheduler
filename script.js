@@ -490,6 +490,6 @@ function parseLink() {
             });
         });
         updatePrereqs($("#courses>:first-child"), $("#courses"));
-        checkValidity();
     }
+    checkValidity();
 }
