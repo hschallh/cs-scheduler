@@ -90,7 +90,8 @@
 var courses = {
 	CS165: {
 			name: "Introduction to Computer Science I/II",
-			restrictedTo: ["Fall", "Winter", "Spring"]
+			restrictedTo: ["Fall", "Winter", "Spring"],
+			note: "THIS COURSE IS NO LONGER AVAILABLE AS OF FALL 2019"
 	},
 	CS161: {
 			name: "Introduction to Computer Science I"
@@ -101,6 +102,7 @@ var courses = {
 	},
 	CS225: {
 			name: "Discrete Structures",
+			notes: "May be replaced with MTH231"
 	},
 	CS271: {
 			name: "Computer Architecture & Assembly Language",
@@ -128,24 +130,38 @@ var courses = {
 	},
 	CS361: {
 			name: "Software Engineering I",
-			prereqs: ["CS261"]
+			prereqs: ["CS261"],
+			notes: "While this shares a similar name to CS362, they are not in any way related and may be taken in any order"
 	},
 	CS362: {
 			name: "Software Engineering II",
-			prereqs: ["CS261"]
-	},
-	CS372: {
-			name: "Intro to Computer Networks",
-			prereqs: ["CS271", "CS261"]
+			prereqs: ["CS261"],
+			notes: "While this shares a similar name to CS361, they are not in any way related and may be taken in any order"
 	},
 	CS467: {
-			name: "Software Projects",
-			prereqs: ["CS361", "CS344"]
+			name: "Online Capstone Project",
+			prereqs: ["CS361", "CS362", "CS344"]
+	},
+	CS321: {
+			name: "Introduction to Theory of Computation",
+			elective: true,
+			prereqs: ["CS261", "CS225"],
+			notes: "THIS IS A 3 CREDIT COURSE. You must take 12 credits of electives to graduate"
 	},
 	CS352: {
 			name: "Introduction to Usability Engineering",
 			elective: true,
 			prereqs: ["CS161"]
+	},
+	CS370: {
+			name: "Introduction to Security",
+			elective: true,
+			prereqs: ["CS344"]
+	},
+	CS372: {
+			name: "Intro to Computer Networks",
+			elective: true,
+			prereqs: ["CS271", "CS261"]
 	},
 	CS475: {
 			name: "Parallel Programming",
@@ -159,11 +175,53 @@ var courses = {
 			prereqs: ["CS340", "CS372", "CS344"],
 			restrictedTo: ["Winter", "Summer"]
 	},
+	CS381: {
+			name: "Programming Language Fundamentals",
+			elective: true,
+			prereqs: ["CS261", "CS225"]
+	},
+	CS391: {
+			name: "Social and Ethical Issues in Computer Science",
+			elective: true,
+			notes: "THIS IS A 3 CREDIT COURSE. You must take 12 credits of electives to graduate"
+	},
+	CS406: {
+			name: "Projects",
+			elective: true,
+			prereqs: ["CS361"],
+			notes: "THIS IS A 2 CREDIT COURSE. You must take 12 credits of electives to graduate. This course is repeatable for a maximum of 16 credits"
+	},
+	CS419: {
+			name: "Selected Topics in Computer Science",
+			elective: true,
+			notes: "This course covers a different topic every offering. Check https://ecampus.oregonstate.edu/soc/ecatalog/ecoursedetail.htm?subject=CS&coursenumber=419&termcode=all for current topic, number of credits, and preqeqs"
+	},
+	CS427: {
+			name: "Cryptography",
+			elective: true,
+			prereqs: ["CS261"]
+	},
+	CS461: {
+			name: "Senior Software Engineering Project I",
+			elective: true,
+			prereqs: ["CS325", "CS361", "CS361"],
+			notes: "THIS IS A 3 CREDIT COURSE. You must take 12 credits of electives to graduate"
+	},
 	CS464: {
 			name: "Open Source Software Development",
 			elective: true,
-			prereqs: ["CS361"],
+			prereqs: ["CS261", "CS361"],
 			restrictedTo: ["Summer", "Fall", "Spring"]
+	},
+	CS477: {
+			name: "Introduction to Digital Forensics",
+			elective: true,
+			prereqs: ["CS261", "CS361"]
+	},
+	CS478: {
+			name: "Network Security",
+			elective: true,
+			prereqs: ["CS372"]
 	},
 	CS492: {
 			name: "Mobile Software Development",
@@ -181,7 +239,7 @@ var courses = {
 			name: "Mobile and Cloud Software Development",
 			elective: true,
 			prereqs: ["CS344"],
-			note: "This class is no longer available as of the summer 2018"
+			note: "THIS COURSE IS NO LONGER AVAILABLE AS OF SUMMER 2018"
 	}
 };
 
@@ -264,10 +322,10 @@ dragAndDrop.on("drop", function(el, target, source, sibling) {
 });
 
 // jquery after page loads
-function setup() { 
+function setup() {
 	// Build html elements for each of the courses
 	for (var id in courses) {
-			var title = (courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "") + (courses[id].note ? " NOTES: " +  courses[id].note : ""); 
+			var title = (courses[id].restrictedTo ? "Restricted to: " + courses[id].restrictedTo.join(" and ") : "") + (courses[id].note ? " NOTES: " +  courses[id].note : "");
 			var html = "<div id='" + id + "' class='list-group-item' title='" + title + "'><strong>" + id + "</strong> - " + courses[id].name + "</div>";
 			$("#courses").append(html);
 
@@ -551,6 +609,6 @@ function populate_schedule(data, start_quarter, use_165) {
 
 
 setup();
-populate_schedule("<%= @schedule.representation %>", "<%= @schedule.start_quarter %>", "<%= @schedule.use_165 %>"); 
+populate_schedule("<%= @schedule.representation %>", "<%= @schedule.start_quarter %>", "<%= @schedule.use_165 %>");
 
 </script>
