@@ -2,6 +2,7 @@
   "name": "cs-scheduler",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "dragula": "^3.7.2"
   }
 }
